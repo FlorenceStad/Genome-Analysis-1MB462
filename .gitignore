@@ -1,0 +1,5 @@
+data/raw_data/*
+data/trimmed_data/*
+analyses/**/*.fastq.gz
+analyses/**/*.bam
+analyses/**/*.sam
