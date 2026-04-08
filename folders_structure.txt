@@ -1,0 +1,17 @@
+├── analysis
+│   └── 01_preprocessing
+│       ├── fastqc_raw
+│       └── whole_genome
+├── code
+│   └── 01_preprocessing
+│       └── 1_fastqc_WG_Raw.sh
+├── data
+│   ├── meta_data
+│   ├── raw_data
+│   │   ├── CRR809859_f1.fq.gz -> /proj/uppmax2026-1-61/Genome_Analysis/2_Zhou_2023/reads/whole_genome_data/CRR809859_f1.fq.gz
+│   │   └── CRR809859_r2.fq.gz -> /proj/uppmax2026-1-61/Genome_Analysis/2_Zhou_2023/reads/whole_genome_data/CRR809859_r2.fq.gz
+│   └── trimmed_data
+├── folders_structure.txt
+├── logs
+├── README.md
+└── test.txt
