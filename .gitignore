@@ -1,5 +1,6 @@
-data/raw_data/*
-data/trimmed_data/*
-analyses/**/*.fastq.gz
-analyses/**/*.bam
-analyses/**/*.sam
+data/
+analysis/**/*.fastq.gz
+analysis/**/*.bam
+analysis/**/*.sam
+logs/
+*.out
