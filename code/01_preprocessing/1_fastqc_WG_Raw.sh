@@ -5,6 +5,7 @@
 #SBATCH -c 2
 #SBATCH -t 00:30:00
 #SBATCH -J fastqc_WG
+#SBATCH -o logs/slurm-%j.out
 
 # Load modules
 module load FastQC
