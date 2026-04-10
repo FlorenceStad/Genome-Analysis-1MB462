@@ -11,7 +11,7 @@
 module load Trimmomatic
 
 # Run Trimmomatic (paired-end)
-trimmomatic PE -threads 4 \
+trimmomatic PE -threads 2 \
 data/raw_data/CRR809859_f1.fq.gz \
 data/raw_data/CRR809859_r2.fq.gz \
 analysis/01_preprocessing/trimmed/CRR809859_f1_paired.fq.gz \
