@@ -1,28 +1,24 @@
-# Ignore everything in these folders
-data/raw_data/*
+# Ignore ALL data and analysis outputs
+data/
+analysis/
+logs/
 
-# Keep folder structure
-!data/raw_data/.gitkeep
-!data/trimmed_data/.gitkeep
+# Keep folder structure with .gitkeep
+!data/.gitkeep
+!data/**/.gitkeep
+!analysis/.gitkeep
+!analysis/**/.gitkeep
+!logs/.gitkeep
 
-# Ignore common bioinformatics outputs
-analyses/**/*.fastq.gz
-analyses/**/*.fq.gz
-analyses/**/*.bam
-analyses/**/*.sam
-analyses/**/*.cram
-analyses/**/*.vcf
-analyses/**/*.vcf.gz
+# Ignore bioinformatics files (extra safety)
+*.fq.gz
+*.fastq.gz
+*.bam
+*.sam
+*.vcf
+*.vcf.gz
 
-# Keep folder structure
-!analyses/**/.gitkeep
-
-#Ignore logs and temp files
+# Ignore logs/temp
+*.out
 *.log
 *.tmp
-*.temp
-*.swp
-*.swo
-
-# Always keep these
-!.gitkeep

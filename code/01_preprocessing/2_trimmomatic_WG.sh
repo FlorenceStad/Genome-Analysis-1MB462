@@ -2,7 +2,7 @@
 
 #SBATCH -A uppmax2026-1-61
 #SBATCH -p pelle
-#SBATCH -c 2
+#SBATCH -c 4
 #SBATCH -t 06:00:00
 #SBATCH -J trim_WG
 #SBATCH -o logs/slurm-%j.out
@@ -11,7 +11,7 @@
 module load Trimmomatic
 
 # Run Trimmomatic (paired-end)
-trimmomatic PE -threads 2 \
+trimmomatic PE -threads 4 \
 data/raw_data/CRR809859_f1.fq.gz \
 data/raw_data/CRR809859_r2.fq.gz \
 analysis/01_preprocessing/trimmed/CRR809859_f1_paired.fq.gz \
