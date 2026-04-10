@@ -1,6 +1,28 @@
-data/
-analysis/**/*.fastq.gz
-analysis/**/*.bam
-analysis/**/*.sam
-logs/
-*.out
+# Ignore everything in these folders
+data/raw_data/*
+
+# Keep folder structure
+!data/raw_data/.gitkeep
+!data/trimmed_data/.gitkeep
+
+# Ignore common bioinformatics outputs
+analyses/**/*.fastq.gz
+analyses/**/*.fq.gz
+analyses/**/*.bam
+analyses/**/*.sam
+analyses/**/*.cram
+analyses/**/*.vcf
+analyses/**/*.vcf.gz
+
+# Keep folder structure
+!analyses/**/.gitkeep
+
+#Ignore logs and temp files
+*.log
+*.tmp
+*.temp
+*.swp
+*.swo
+
+# Always keep these
+!.gitkeep
