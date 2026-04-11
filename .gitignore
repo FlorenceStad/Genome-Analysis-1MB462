@@ -1,5 +1,6 @@
 # Ignore ALL data and analysis outputs
 data/raw_data/**
+!data/raw_data/README.md
 analysis/01_preprocessing/trimmed/**
 analysis/01_preprocessing/trimmed_chr3/**
 logs/**
