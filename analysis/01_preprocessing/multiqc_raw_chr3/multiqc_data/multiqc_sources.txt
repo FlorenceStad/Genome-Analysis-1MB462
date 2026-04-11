@@ -1,0 +1,3 @@
+Module	Section	Sample Name	Source
+FastQC	all_sections	chr3_illumina_R2	/gorilla/home/flst8788/Genome-Analysis-1MB462/analysis/01_preprocessing/fastqc_raw_chr3/chr3_illumina_R2_fastqc.zip
+FastQC	all_sections	chr3_illumina_R1	/gorilla/home/flst8788/Genome-Analysis-1MB462/analysis/01_preprocessing/fastqc_raw_chr3/chr3_illumina_R1_fastqc.zip

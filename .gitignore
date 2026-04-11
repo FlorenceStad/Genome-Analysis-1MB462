@@ -1,14 +1,8 @@
 # Ignore ALL data and analysis outputs
-data/
-analysis/
-logs/
-
-# Keep folder structure with .gitkeep
-!data/.gitkeep
-!data/**/.gitkeep
-!analysis/.gitkeep
-!analysis/**/.gitkeep
-!logs/.gitkeep
+data/raw_data/**
+analysis/01_preprocessing/trimmed/**
+analysis/01_preprocessing/trimmed_chr3/**
+logs/**
 
 # Ignore bioinformatics files (extra safety)
 *.fq.gz

@@ -1,0 +1,3 @@
+Sample	Unique Reads	Duplicate Reads
+chr3_illumina_R1	14047812.0	6932039.0
+chr3_illumina_R2	14581099.0	6398752.0
