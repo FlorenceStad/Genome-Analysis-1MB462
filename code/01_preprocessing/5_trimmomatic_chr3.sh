@@ -9,6 +9,7 @@
 
 module load Trimmomatic
 
+#Run
 trimmomatic PE -threads 2 \
 data/raw_data/chr3_illumina_R1.fastq.gz \
 data/raw_data/chr3_illumina_R2.fastq.gz \
