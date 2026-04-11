@@ -1,17 +1,49 @@
+.
 ├── analysis
 │   └── 01_preprocessing
 │       ├── fastqc_raw
-│       └── whole_genome
+│       │   ├── CRR809859_f1_fastqc.html
+│       │   ├── CRR809859_f1_fastqc.zip
+│       │   ├── CRR809859_r2_fastqc.html
+│       │   └── CRR809859_r2_fastqc.zip
+│       ├── fastqc_raw_chr3
+│       │   ├── chr3_illumina_R1_fastqc.html
+│       │   ├── chr3_illumina_R1_fastqc.zip
+│       │   ├── chr3_illumina_R2_fastqc.html
+│       │   └── chr3_illumina_R2_fastqc.zip
+│       ├── fastqc_trimmed
+│       ├── trimmed
+│       │   ├── CRR809859_f1_paired.fq.gz
+│       │   ├── CRR809859_f1_unpaired.fq.gz
+│       │   ├── CRR809859_r2_paired.fq.gz
+│       │   └── CRR809859_r2_unpaired.fq.gz
+│       └── trimmed_chr3
 ├── code
 │   └── 01_preprocessing
-│       └── 1_fastqc_WG_Raw.sh
+│       ├── 1_fastqc_WG_Raw.sh
+│       ├── 2_trimmomatic_WG.sh
+│       ├── 3_fastqc_trimmed.sh
+│       ├── 4_fastqc_ch3_raw.sh
+│       ├── 5_trimmomatic_ch3.sh
+│       └── logs
+│           └── slurm-4864991.out
 ├── data
 │   ├── meta_data
-│   ├── raw_data
-│   │   ├── CRR809859_f1.fq.gz -> /proj/uppmax2026-1-61/Genome_Analysis/2_Zhou_2023/reads/whole_genome_data/CRR809859_f1.fq.gz
-│   │   └── CRR809859_r2.fq.gz -> /proj/uppmax2026-1-61/Genome_Analysis/2_Zhou_2023/reads/whole_genome_data/CRR809859_r2.fq.gz
-│   └── trimmed_data
+│   └── raw_data
+│       ├── chr3_clean_nanopore.fq.gz -> /proj/uppmax2026-1-61/Genome_Analysis/2_Zhou_2023/reads/genomics_chr3_data/chr3_clean_nanopore.fq.gz
+│       ├── chr3_hiC_R1.fastq.gz -> /proj/uppmax2026-1-61/Genome_Analysis/2_Zhou_2023/reads/genomics_chr3_data/chr3_hiC_R1.fastq.gz
+│       ├── chr3_hiC_R2.fastq.gz -> /proj/uppmax2026-1-61/Genome_Analysis/2_Zhou_2023/reads/genomics_chr3_data/chr3_hiC_R2.fastq.gz
+│       ├── chr3_illumina_R1.fastq.gz -> /proj/uppmax2026-1-61/Genome_Analysis/2_Zhou_2023/reads/genomics_chr3_data/chr3_illumina_R1.fastq.gz
+│       ├── chr3_illumina_R2.fastq.gz -> /proj/uppmax2026-1-61/Genome_Analysis/2_Zhou_2023/reads/genomics_chr3_data/chr3_illumina_R2.fastq.gz
+│       ├── chr3_nanopore_15mers.hist -> /proj/uppmax2026-1-61/Genome_Analysis/2_Zhou_2023/reads/genomics_chr3_data/chr3_nanopore_15mers.hist
+│       ├── chr3_nanopore_15mers.ktab -> /proj/uppmax2026-1-61/Genome_Analysis/2_Zhou_2023/reads/genomics_chr3_data/chr3_nanopore_15mers.ktab
+│       ├── CRR809859_f1.fq.gz -> /proj/uppmax2026-1-61/Genome_Analysis/2_Zhou_2023/reads/whole_genome_data/CRR809859_f1.fq.gz
+│       └── CRR809859_r2.fq.gz -> /proj/uppmax2026-1-61/Genome_Analysis/2_Zhou_2023/reads/whole_genome_data/CRR809859_r2.fq.gz
 ├── folders_structure.txt
 ├── logs
-├── README.md
-└── test.txt
+│   ├── slurm-4850136.out
+│   ├── slurm-4864987.out
+│   └── slurm-4864992.out
+└── README.md
+
+14 directories, 32 files
