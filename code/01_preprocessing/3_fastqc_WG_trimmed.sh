@@ -9,8 +9,8 @@
 
 module load FastQC
 
+mkdir -p /home/flst8788/Genome-Analysis-1MB462/analysis/01_preprocessing/fastqc_trimmed_wg
 
-# Run FastQC
-fastqc -t 2 /home/flst8788/Genome-Analysis-1MB462/analysis/01_preprocessing/trimmed/*paired.fq.gz \
--o /home/flst8788/Genome-Analysis-1MB462/analysis/01_preprocessing/fastqc_trimmed/
-
+fastqc -t 2 \
+/proj/uppmax2026-1-61/flst8788/Genome-Analysis-1MB462/analysis/01_preprocessing/trimmed_wg/*paired.fq.gz \
+-o /home/flst8788/Genome-Analysis-1MB462/analysis/01_preprocessing/fastqc_trimmed_wg/
