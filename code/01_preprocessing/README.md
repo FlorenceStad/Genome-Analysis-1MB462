@@ -4,7 +4,7 @@ This directory contains all scripts used for preprocessing sequencing data in th
 
 ---
 
-## orkflow overview
+## Workflow overview
 
 The preprocessing pipeline is executed in the following order:
 
