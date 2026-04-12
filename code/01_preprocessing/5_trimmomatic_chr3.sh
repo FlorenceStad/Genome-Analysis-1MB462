@@ -9,12 +9,21 @@
 
 module load Trimmomatic
 
-#Run
+# Input files
+R1=/home/flst8788/Genome-Analysis-1MB462/data/raw_data/chr3_illumina_R1.fastq.gz
+R2=/home/flst8788/Genome-Analysis-1MB462/data/raw_data/chr3_illumina_R2.fastq.gz
+
+# Output directory (your project storage)
+OUTDIR=/proj/uppmax2026-1-61/flst8788/Genome-Analysis-1MB462/analysis/01_preprocessing/trimmed_chr3
+
+mkdir -p $OUTDIR
+
+# Run Trimmomatic
 trimmomatic PE -threads 2 \
-data/raw_data/chr3_illumina_R1.fastq.gz \
-data/raw_data/chr3_illumina_R2.fastq.gz \
-analysis/01_preprocessing/trimmed_chr3/chr3_R1_paired.fq.gz \
-analysis/01_preprocessing/trimmed_chr3/chr3_R1_unpaired.fq.gz \
-analysis/01_preprocessing/trimmed_chr3/chr3_R2_paired.fq.gz \
-analysis/01_preprocessing/trimmed_chr3/chr3_R2_unpaired.fq.gz \
+$R1 \
+$R2 \
+$OUTDIR/chr3_R1_paired.fq.gz \
+$OUTDIR/chr3_R1_unpaired.fq.gz \
+$OUTDIR/chr3_R2_paired.fq.gz \
+$OUTDIR/chr3_R2_unpaired.fq.gz \
 SLIDINGWINDOW:4:20 MINLEN:50
