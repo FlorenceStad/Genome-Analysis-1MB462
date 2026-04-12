@@ -1,3 +1,0 @@
-Sample	fastqc-percent_duplicates	fastqc-percent_gc	fastqc-avg_sequence_length	fastqc-median_sequence_length	fastqc-percent_fails	fastqc-total_sequences
-chr3_illumina_R1	33.04141243158374	41.0	149.0471378228568	150	0.0	20.979851
-chr3_illumina_R2	30.49951123840313	41.0	148.87009443012727	150	0.0	20.979851

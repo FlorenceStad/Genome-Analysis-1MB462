@@ -1,3 +1,0 @@
-Module	Section	Sample Name	Source
-FastQC	all_sections	CRR809859_f1	/gorilla/home/flst8788/Genome-Analysis-1MB462/analysis/01_preprocessing/fastqc_raw/CRR809859_f1_fastqc.zip
-FastQC	all_sections	CRR809859_r2	/gorilla/home/flst8788/Genome-Analysis-1MB462/analysis/01_preprocessing/fastqc_raw/CRR809859_r2_fastqc.zip
