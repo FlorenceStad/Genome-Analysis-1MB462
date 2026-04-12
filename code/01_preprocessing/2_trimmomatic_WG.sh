@@ -10,12 +10,21 @@
 # Load modules
 module load Trimmomatic
 
-# Run Trimmomatic (paired-end)
+# Input files (direct from project storage)
+R1=/home/flst8788/Genome-Analysis-1MB462/data/raw_data/CRR809859_f1.fq.gz
+R2=/home/flst8788/Genome-Analysis-1MB462/data/raw_data/CRR809859_r2.fq.gz
+
+# Output directory in proj
+OUTDIR=/proj/uppmax2026-1-61/flst8788/Genome-Analysis-1MB462/analysis/01_preprocessing/trimmed_wg
+
+mkdir -p $OUTDIR
+
+# Run Trimmomatic
 trimmomatic PE -threads 2 \
-data/raw_data/CRR809859_f1.fq.gz \
-data/raw_data/CRR809859_r2.fq.gz \
-analysis/01_preprocessing/trimmed/CRR809859_f1_paired.fq.gz \
-analysis/01_preprocessing/trimmed/CRR809859_f1_unpaired.fq.gz \
-analysis/01_preprocessing/trimmed/CRR809859_r2_paired.fq.gz \
-analysis/01_preprocessing/trimmed/CRR809859_r2_unpaired.fq.gz \
+$R1 \
+$R2 \
+$OUTDIR/CRR809859_f1_paired.fq.gz \
+$OUTDIR/CRR809859_f1_unpaired.fq.gz \
+$OUTDIR/CRR809859_r2_paired.fq.gz \
+$OUTDIR/CRR809859_r2_unpaired.fq.gz \
 SLIDINGWINDOW:4:20 MINLEN:50
