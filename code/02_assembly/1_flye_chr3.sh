@@ -8,7 +8,7 @@
 #SBATCH -o logs/slurm-%j.out
 
 # Load module
-module load flye
+module load Flye/2.9.6-GCC-13.3.0
 
 # Define input and output paths
 INPUT=/home/flst8788/Genome-Analysis-1MB462/data/raw_data/chr3_clean_nanopore.fq.gz
