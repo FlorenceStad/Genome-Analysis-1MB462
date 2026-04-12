@@ -3,7 +3,7 @@ This directory contains quality control and read trimming steps for both the who
 
 ---
 
-## torage note
+## Storage note
 
 Some output files are large and therefore stored in the project directory:
 
