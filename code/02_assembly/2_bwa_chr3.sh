@@ -7,7 +7,6 @@
 #SBATCH -J bwa_chr3
 #SBATCH -o logs/slurm-%j_bwa.out
 
-module load bioinfo-tools
 module load BWA/0.7.19-GCCcore-13.3.0
 module load SAMtools/1.22.1-GCC-13.3.0
 
