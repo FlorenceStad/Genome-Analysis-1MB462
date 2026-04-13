@@ -10,14 +10,14 @@
 module load bwa
 module load samtools
 
-# Flye assembly output (symlink to be added)
+# Flye assembly output
 
-# Trimmed reads (symlinked)
+# Trimmed reads 
 R1=analysis/01_preprocessing/trimmomatic_chr3/chr3_R1_paired.fq.gz
 R2=analysis/01_preprocessing/trimmomatic_chr3/chr3_R2_paired.fq.gz
 
-# Output goes to PROJ (
-OUTDIR=/proj/uppmax2026-1-61/flst8788/Genome-Analysis-1MB462/analysis/02_assembly/bwa_chr3
+# Output goes to analysis
+
 mkdir -p $OUTDIR
 
 # Index assembly

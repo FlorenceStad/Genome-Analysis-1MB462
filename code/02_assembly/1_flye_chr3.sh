@@ -14,7 +14,7 @@ module load Flye/2.9.6-GCC-13.3.0
 # Define input and output paths
 INPUT=/home/flst8788/Genome-Analysis-1MB462/data/raw_data/chr3_clean_nanopore.fq.gz
 
-OUTDIR=/proj/uppmax2026-1-61/flst8788/Genome-Analysis-1MB462/analysis/02_assembly/flye_chr3
+OUTDIR=/home/flst8788/Genome-Analysis-1MB462/analysis/02_assembly/flye_chr3
 
 # Create output directory 
 mkdir -p $OUTDIR
