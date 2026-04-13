@@ -56,4 +56,4 @@ The assembly pipeline is executed in the following order:
 
 ## Output structure
 
-All outputs from these scripts are stored in:
+All outputs from these scripts are stored in: analysis/02_assembly/
