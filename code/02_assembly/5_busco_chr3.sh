@@ -8,8 +8,7 @@
 #SBATCH -J busco_chr3
 #SBATCH -o logs/slurm-%j_busco.out
 
-module purge
-module load BUSCO/5.7.0
+module load BUSCO/5.8.2-gfbf-2024a
 
 # Input (use polished assembly!)
 ASSEMBLY=/home/flst8788/Genome-Analysis-1MB462/analysis/02_assembly/pilon_chr3/pilon_chr3.fasta
