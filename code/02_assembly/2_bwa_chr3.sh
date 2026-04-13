@@ -7,8 +7,9 @@
 #SBATCH -J bwa_chr3
 #SBATCH -o logs/slurm-%j_bwa.out
 
-module load bwa
-module load samtools
+module load bioinfo-tools
+module load BWA/0.7.19-GCCcore-13.3.0
+module load SAMtools/1.22.1-GCC-13.3.0
 
 # Flye assembly output
 ASSEMBLY=/home/flst8788/Genome-Analysis-1MB462/analysis/02_assembly/flye_chr3/assembly.fasta
