@@ -3,6 +3,7 @@ data/raw_data/**
 !data/raw_data/README.md
 analysis/01_preprocessing/trimmed/**
 analysis/01_preprocessing/trimmed_chr3/**
+analysis/02_assembly
 logs/**
 
 # Ignore bioinformatics files (extra safety)
