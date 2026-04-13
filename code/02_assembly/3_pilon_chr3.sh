@@ -11,9 +11,7 @@
 module load Pilon
 module load SAMtools/1.22.1-GCC-13.3.0
 
-# -----------------------
 # INPUT PATHS
-# -----------------------
 
 ASSEMBLY=/home/flst8788/Genome-Analysis-1MB462/analysis/02_assembly/flye_chr3/assembly.fasta
 
@@ -22,22 +20,15 @@ BAM=/home/flst8788/Genome-Analysis-1MB462/analysis/02_assembly/bwa_chr3/aln.sort
 OUTDIR=/home/flst8788/Genome-Analysis-1MB462/analysis/02_assembly/pilon_chr3
 
 mkdir -p $OUTDIR
-mkdir -p logs
 
-# -----------------------
-# INDEX BAM (safety step)
-# -----------------------
+# INDEX BAM 
 samtools index $BAM
 
-# -----------------------
 # RUN PILON
-# -----------------------
 
-java -Xmx30G -jar $PILON_JAR \
+java -Xmx16G -jar $EBROOTPILON/pilon.jar \
   --genome $ASSEMBLY \
   --frags $BAM \
   --output pilon_chr3 \
   --outdir $OUTDIR \
   --threads 2 \
-  --changes \
-  --vcf
