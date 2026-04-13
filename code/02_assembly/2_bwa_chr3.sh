@@ -3,7 +3,7 @@
 #SBATCH -A uppmax2026-1-61
 #SBATCH -p pelle
 #SBATCH -c 2
-#SBATCH -t 04:00:00
+#SBATCH -t 02:00:00
 #SBATCH -J bwa_chr3
 #SBATCH -o logs/slurm-%j_bwa.out
 
@@ -11,12 +11,14 @@ module load bwa
 module load samtools
 
 # Flye assembly output
+ASSEMBLY=/home/flst8788/Genome-Analysis-1MB462/analysis/02_assembly/flye_chr3/assembly.fasta
 
-# Trimmed reads 
-R1=analysis/01_preprocessing/trimmomatic_chr3/chr3_R1_paired.fq.gz
-R2=analysis/01_preprocessing/trimmomatic_chr3/chr3_R2_paired.fq.gz
+# Trimmed paired reads (DIN MAPP HETER trimmed_chr3, inte trimmomatic_chr3)
+R1=/home/flst8788/Genome-Analysis-1MB462/analysis/01_preprocessing/trimmed_chr3/chr3_R1_paired.fq.gz
+R2=/home/flst8788/Genome-Analysis-1MB462/analysis/01_preprocessing/trimmed_chr3/chr3_R2_paired.fq.gz
 
-# Output goes to analysis
+# Output
+OUTDIR=/home/flst8788/Genome-Analysis-1MB462/analysis/02_assembly/bwa_chr3
 
 mkdir -p $OUTDIR
 
