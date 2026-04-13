@@ -1,8 +1,8 @@
 # Genome-Analysis-1MB462
 A project exploring environmental moss research and analysis, as a part of the course Genome Analysis. This project is part of the course Genome Analysis and follows a standard genome assembly and annotation workflow.
 
-# About the Project
-In this project we:
+# Project overview
+This project performs a complete genome analysis pipeline including:
 - Quality control of sequencing reads (FastQC)
 - Read trimming and preprocessing (Trimmomatic)
 - Genome assembly using long reads (Flye)
@@ -27,51 +27,28 @@ The project is organized into:
 - logs/ → SLURM output logs
 
 # Key workflow steps
-01_preprocessing → FastQC + Trimmomatic
-02_assembly → Flye → BWA → Pilon → QUAST → BUSCO
+**01_preprocessing**
+- FastQC (raw reads)
+- Trimmomatic (read trimming)
+- FastQC (post-trimming QC)
 
-## Workflow Summary
-1. FastQC (raw reads)
-2. Trimmomatic (read trimming)
-3. FastQC (post-trimming QC)
-4. Flye genome assembly (Nanopore reads)
-5. BWA mapping (Illumina → assembly)
-6. Pilon polishing
-7. Assembly evaluation (QUAST, BUSCO)
-8. ...
+**02_assembly**
+- Flye genome assembly (Nanopore reads)
+- BWA mapping (Illumina reads → assembly)
+- Pilon polishing
+- Assembly evaluation (QUAST, BUSCO)
 
 # Data Management 
 
-Due to UPPMAX storage limitations, this project uses a **mirrored directory structure**.
-
-## Home directory (this repository)
-Located at: /home/flst8788/Genome-Analysis-1MB462
+All data, intermediate files, and results are stored within the project directory (This repository): /home/flst8788/Genome-Analysis-1MB462
+This ensures a fully self-contained and reproducible workflow.
 
 This contains:
-- Code (scripts)
-- Project structure
-- Symlinks to large datasets
-- Files intended for GitHub submission
-
-## Project directory (UPPMAX storage)
-Located at: /proj/uppmax2026-1-61/flst8788/Genome-Analysis-1MB462
-
-This contains:
-- Large output files (e.g. Flye assembly, BAM files)
-- Computationally heavy results
-- Intermediate pipeline data
-
-## Symlink strategy
-
-To keep workflow reproducible and GitHub-friendly:
-- Large outputs are stored in `/proj`
-- Accessed via symbolic links in `/home`
-- This ensures:
-  - no home quota issues
-  - clean GitHub structure
-  - reproducible analysis pipeline
-
-Example: analysis/01_preprocessing/trimmomatic_chr3 → /proj/.../trimmed_chr3
+- Analysis results and figures
+- SLURM scripts for all pipeline steps
+- Processed datasets
+- Genome assemblies and evaluation outputs
+- Research notes and documentation
 
 # Authors
 Florence Stadelmann, Uppsala University
