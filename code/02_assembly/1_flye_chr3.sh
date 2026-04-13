@@ -23,4 +23,4 @@ mkdir -p $OUTDIR
 flye \
   --nano-raw $INPUT \
   --out-dir $OUTDIR \
-  --threads 2
+  --threads 16
