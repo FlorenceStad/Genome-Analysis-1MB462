@@ -2,8 +2,8 @@
 
 #SBATCH -A uppmax2026-1-61
 #SBATCH -p pelle
-#SBATCH -c 2
-#SBATCH -t 24:00:00
+#SBATCH -c 16
+#SBATCH -t 8:00:00
 #SBATCH --mem=64G
 #SBATCH -J flye_chr3
 #SBATCH -o logs/slurm-%j.out
