@@ -47,10 +47,3 @@ The preprocessing pipeline is executed in the following order:
 ## Output structure
 
 All outputs from these scripts are stored in: analysis/01_preprocessing/ with subdirectories.
-
----
-
-## Storage note
-
-Large files are stored in project storage: /proj/uppmax2026-1-61/flst8788/Genome-Analysis-1MB462/ to avoid exceeding home directory disk quota. Soft links are used where appropriate.
-
