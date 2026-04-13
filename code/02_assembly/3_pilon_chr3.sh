@@ -9,7 +9,7 @@
 #SBATCH -o logs/slurm-%j_pilon.out
 
 module load Pilon
-module load samtools
+module load SAMtools/1.22.1-GCC-13.3.0
 
 # -----------------------
 # INPUT PATHS
@@ -38,6 +38,6 @@ java -Xmx30G -jar $PILON_JAR \
   --frags $BAM \
   --output pilon_chr3 \
   --outdir $OUTDIR \
-  --threads 4 \
+  --threads 2 \
   --changes \
   --vcf
