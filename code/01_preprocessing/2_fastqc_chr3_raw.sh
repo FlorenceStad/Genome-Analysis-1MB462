@@ -7,6 +7,7 @@
 #SBATCH -J fastqc_chr3_raw
 #SBATCH -o logs/slurm-%j.out
 
+# Load module
 module load FastQC
 
 mkdir -p /home/flst8788/Genome-Analysis-1MB462/analysis/01_preprocessing/fastqc_raw_chr3
