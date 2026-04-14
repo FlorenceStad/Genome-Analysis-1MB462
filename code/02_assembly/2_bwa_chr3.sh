@@ -13,7 +13,7 @@ module load SAMtools/1.22.1-GCC-13.3.0
 # Flye assembly output
 ASSEMBLY=/home/flst8788/Genome-Analysis-1MB462/analysis/02_assembly/flye_chr3/assembly.fasta
 
-# Trimmed paired reads (DIN MAPP HETER trimmed_chr3, inte trimmomatic_chr3)
+# Trimmed paired reads
 R1=/home/flst8788/Genome-Analysis-1MB462/analysis/01_preprocessing/trimmed_chr3/chr3_R1_paired.fq.gz
 R2=/home/flst8788/Genome-Analysis-1MB462/analysis/01_preprocessing/trimmed_chr3/chr3_R2_paired.fq.gz
 
