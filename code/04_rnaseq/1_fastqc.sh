@@ -3,10 +3,10 @@
 #SBATCH -A uppmax2026-1-61
 #SBATCH -p pelle
 #SBATCH -c 2
-#SBATCH -t 02:00:00
+#SBATCH -t 01:00:00
 #SBATCH --mem=16G
 #SBATCH -J fastqc_rna
-#SBATCH -o ../../logs/slurm-%j_fastqc_rna.out
+#SBATCH -o /home/flst8788/Genome-Analysis-1MB462/logs/slurm-%j_fastqc_rna.out
 
 module load FastQC
 
@@ -20,3 +20,4 @@ for file in $INDIR/*.fq.gz
 do
     fastqc -t 4 -o $OUTDIR $file
 done
+
