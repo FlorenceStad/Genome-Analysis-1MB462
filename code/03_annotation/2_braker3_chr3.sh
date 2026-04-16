@@ -2,7 +2,7 @@
 
 #SBATCH -A uppmax2026-1-61
 #SBATCH -p pelle
-#SBATCH -c 4
+#SBATCH -c 2
 #SBATCH -t 24:00:00
 #SBATCH --mem=64G
 #SBATCH -J braker_chr3
@@ -12,18 +12,6 @@
 
 module load singularity
 module load SAMtools/1.22-GCC-13.3.0
-
-
-# IMPORTANT BRAKER ENV SETUP
-
-export AUGUSTUS_CONFIG_PATH=$HOME/augustus_config
-export AUGUSTUS_BIN_PATH=/sw/bioinfo/augustus/3.4.0/snowy/bin
-export AUGUSTUS_SCRIPTS_PATH=/sw/bioinfo/augustus/3.4.0/snowy/scripts
-export GENEMARK_PATH=/sw/bioinfo/GeneMark/4.33-es/snowy
-
-# This ensures AUGUSTUS config is writable (run once if not done already)
-source $AUGUSTUS_CONFIG_COPY
-
 
 # PROJECT PATHS
 
@@ -41,7 +29,7 @@ echo "Checking genome..."
 ls -lh $GENOME
 
 echo "Checking BAM files..."
-ls $RNA_BAM_DIR/*.bam
+ls $RNA_BAM_DIR/*.sorted.bam
 
 # COLLECT BAM FILES
 
@@ -51,14 +39,14 @@ echo "BAM list:"
 echo $BAM_FILES
 
 # RUN BRAKER3
-
-singularity exec $BRAKER_SIF braker.pl \
+singularity exec \
+-B /gorilla/home/flst8788:/gorilla/home/flst8788 \
+$BRAKER_SIF braker.pl \
     --genome=$GENOME \
     --bam=$BAM_FILES \
     --species=chr3_moss \
     --softmasking \
-    --cores 4 \
-    --workingdir=$OUTDIR \
-    --useexisting
+    --threads 2 \
+    --workingdir=$OUTDIR 
 
 echo "BRAKER finished successfully!"
