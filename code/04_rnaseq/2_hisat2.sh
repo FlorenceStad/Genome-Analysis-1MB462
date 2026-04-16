@@ -2,8 +2,8 @@
 
 #SBATCH -A uppmax2026-1-61
 #SBATCH -p pelle
-#SBATCH -c 4
-#SBATCH -t 06:00:00
+#SBATCH -c 2
+#SBATCH -t 03:00:00
 #SBATCH --mem=32G
 #SBATCH -J hisat2_chr3_rna
 #SBATCH -o /home/flst8788/Genome-Analysis-1MB462/logs/slurm-%j_hisat2_rna.out
@@ -22,7 +22,7 @@ mkdir -p $OUTDIR
 INDEX_PREFIX=$OUTDIR/chr3_index
 
 if [ ! -f "${INDEX_PREFIX}.1.ht2" ]; then
-    hisat2-build -p 4 $REF $INDEX_PREFIX
+    hisat2-build -p 2 $REF $INDEX_PREFIX
 fi
 
 # STEP 2: Samples (paired-end)
@@ -46,11 +46,11 @@ do
     OUTBAM=$OUTDIR/${s}.sorted.bam
 
     hisat2 \
-        -p 4 \
+        -p 2 \
         -x $INDEX_PREFIX \
         -1 $R1 \
         -2 $R2 \
-        | samtools sort -@ 4 -o $OUTBAM
+        | samtools sort -@ 2 -o $OUTBAM
 
     samtools index $OUTBAM
 
