@@ -10,12 +10,11 @@
 
 # MODULES (Singularity-based BRAKER)
 
-module load singularity
 module load SAMtools/1.22-GCC-13.3.0
 
 # PROJECT PATHS
 
-GENOME=/home/flst8788/Genome-Analysis-1MB462/analysis/02_assembly/pilon_chr3/pilon_chr3.fasta.masked
+GENOME=/home/flst8788/Genome-Analysis-1MB462/analysis/03_annotation/repeatmasker_chr3/pilon_chr3.fasta.masked
 RNA_BAM_DIR=/home/flst8788/Genome-Analysis-1MB462/analysis/04_rnaseq/hisat2_rna
 OUTDIR=/home/flst8788/Genome-Analysis-1MB462/analysis/03_annotation/braker_chr3
 BRAKER_SIF=/proj/uppmax2026-1-61/Genome_Analysis/2_Zhou_2023/braker3.sif
