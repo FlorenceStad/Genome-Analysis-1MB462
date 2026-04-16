@@ -3,7 +3,7 @@
 #SBATCH -A uppmax2026-1-61
 #SBATCH -p pelle
 #SBATCH -c 2
-#SBATCH -t 08:00:00
+#SBATCH -t 04:00:00
 #SBATCH -J trim_chr3
 #SBATCH -o logs/slurm-%j.out
 
