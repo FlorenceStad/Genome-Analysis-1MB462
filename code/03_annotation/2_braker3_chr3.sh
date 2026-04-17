@@ -3,7 +3,7 @@
 #SBATCH -A uppmax2026-1-61
 #SBATCH -p pelle
 #SBATCH -c 2
-#SBATCH -t 24:00:00
+#SBATCH -t 12:00:00
 #SBATCH --mem=64G
 #SBATCH -J braker_chr3
 #SBATCH -o /home/flst8788/Genome-Analysis-1MB462/logs/slurm-%j_braker.out
@@ -39,7 +39,8 @@ echo $BAM_FILES
 
 # RUN BRAKER3
 singularity exec \
--B /gorilla/home/flst8788:/gorilla/home/flst8788 \
+-B $HOME/augustus_config:/opt/Augustus/config \
+-B $HOME:/home/$USER \
 $BRAKER_SIF braker.pl \
     --genome=$GENOME \
     --bam=$BAM_FILES \
