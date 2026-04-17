@@ -3,7 +3,7 @@
 #SBATCH -A uppmax2026-1-61
 #SBATCH -p pelle
 #SBATCH -c 2
-#SBATCH -t 12:00:00
+#SBATCH -t 24:00:00
 #SBATCH --mem=64G
 #SBATCH -J braker_chr3
 #SBATCH -o /home/flst8788/Genome-Analysis-1MB462/logs/slurm-%j_braker.out
@@ -47,10 +47,10 @@ $BRAKER_SIF braker.pl \
     --genome=$GENOME \
     --bam=$BAM_FILES \
     --prot_seq=$PROTEIN_DB \
-    --species=chr3_moss_clean \
+    --species=chr3_moss_cleaned \
     --softmasking \
     --threads 2 \
     --workingdir=$OUTDIR \
     --skipOptimize 
 
-echo "BRAKER finished successfully!"
+echo "BRAKER finished successfully! I think"
