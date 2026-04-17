@@ -43,7 +43,7 @@ echo $BAM_FILES
 singularity exec \
 -B $HOME/augustus_config:/opt/Augustus/config \
 -B $HOME:/home/$USER \
--B $OUTDIR:$OUTDIR \
+-B /proj/uppmax2026-1-61:/proj/uppmax2026-1-61 \
 $BRAKER_SIF braker.pl \
     --genome=$GENOME \
     --bam=$BAM_FILES \
