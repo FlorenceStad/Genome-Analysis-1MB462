@@ -29,7 +29,7 @@ data/raw_data/*
 !data/raw_data/**/*.md
 
 # ANALYSIS (ignore everything)
-analysis/*
+analysis/**
 
 # Allow directory traversal
 !analysis/*/
