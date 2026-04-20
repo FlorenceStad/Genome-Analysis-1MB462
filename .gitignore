@@ -21,30 +21,26 @@ slurm-*.out
 logs/
 
 ########################################
-# RAW DATA PROTECTION
+# IGNORE ANALYSIS OUTPUTS
+########################################
+analysis/
+
+########################################
+# IGNORE RAW DATA FILE CONTENTS
 ########################################
 data/raw_data/*
 
-########################################
-# IGNORE ALL ANALYSIS BY DEFAULT
-########################################
-analysis/*
-
-########################################
-# IGNORE ALL RAWDATA BY DEFAULT
-########################################
-data/raw_data/**
+# Allow README
 !data/raw_data/README.md
 
-# Ignore bioinformatics files (extra safety)
-# BUT allow symlinks and README
+# Allow subdirectories (so Git can see inside them)
+!data/raw_data/*/
+
+# Allow symlinks (they appear as files, so allow specific patterns)
 !data/raw_data/**/*.fq.gz
 !data/raw_data/**/*.fastq.gz
 !data/raw_data/**/*.hist
 !data/raw_data/**/*.ktab
-!data/raw_data/**/*.md
-
-
 
 
 
