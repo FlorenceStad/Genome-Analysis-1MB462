@@ -1,7 +1,13 @@
 # Ignore raw data contents
-data/raw_data/**
+data/raw_data/*
 
-# BUT allow symlinks and README
+# Allow README
+!data/raw_data/README.md
+
+# Allow subdirectories to be traversed
+!data/raw_data/*/
+
+# Allow specific file types (including symlinks)
 !data/raw_data/**/*.fq.gz
 !data/raw_data/**/*.fastq.gz
 !data/raw_data/**/*.hist
