@@ -1,12 +1,14 @@
-# Ignore ALL data and analysis outputs
+# Ignore raw data contents
 data/raw_data/**
-!data/raw_data/README.md
-analysis/01_preprocessing/trimmed/**
-analysis/01_preprocessing/trimmed_chr3/**
-analysis/
-logs/**
 
-# Ignore bioinformatics files (extra safety)
+# BUT allow symlinks and README
+!data/raw_data/**/*.fq.gz
+!data/raw_data/**/*.fastq.gz
+!data/raw_data/**/*.hist
+!data/raw_data/**/*.ktab
+!data/raw_data/**/*.md
+
+# Global bioinf files
 *.fq.gz
 *.fastq.gz
 *.bam
@@ -14,7 +16,39 @@ logs/**
 *.vcf
 *.vcf.gz
 
-# Ignore logs/temp
+# LOGS / TEMP
+logs/**
 *.out
 *.log
 *.tmp
+
+# Analysis outputs (selective ignore)
+# Ignore heavy tool output folders
+analysis/**/trimmed*/
+analysis/**/flye*/
+analysis/**/bwa*/
+analysis/**/hisat2*/
+analysis/**/tmp/
+analysis/**/logs/
+
+# Ignore BUSCO heavy internals but keep summaries
+analysis/**/busco*/run_*/
+analysis/**/busco*/logs/
+
+# Ignore FastQC raw outputs but allow summaries
+analysis/**/fastqc_*/**/*
+
+# Allow Small and Useful files
+# Allow reports & summaries everywhere
+!analysis/**/*.txt
+!analysis/**/*.tsv
+!analysis/**/*.csv
+!analysis/**/*.html
+!analysis/**/*.pdf
+!analysis/**/*.png
+
+# Allow MultiQC outputs specifically
+!analysis/**/multiqc_data/**
+!analysis/**/multiqc_report.html
+
+
