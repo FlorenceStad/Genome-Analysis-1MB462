@@ -1,0 +1,25 @@
+All statistics are based on contigs of size >= 500 bp, unless otherwise noted (e.g., "# contigs (>= 0 bp)" and "Total length (>= 0 bp)" include all contigs).
+
+Assembly                    assembly   pilon_chr3
+# contigs (>= 0 bp)         58         58        
+# contigs (>= 1000 bp)      57         57        
+# contigs (>= 5000 bp)      52         52        
+# contigs (>= 10000 bp)     49         50        
+# contigs (>= 25000 bp)     37         37        
+# contigs (>= 50000 bp)     26         26        
+Total length (>= 0 bp)      16991439   17023506  
+Total length (>= 1000 bp)   16990797   17022864  
+Total length (>= 5000 bp)   16975344   17007407  
+Total length (>= 10000 bp)  16950416   16992448  
+Total length (>= 25000 bp)  16738608   16770309  
+Total length (>= 50000 bp)  16371994   16403141  
+# contigs                   58         58        
+Largest contig              2923718    2929087   
+Total length                16991439   17023506  
+GC (%)                      41.93      41.76     
+N50                         1699407    1702741   
+N90                         255394     255851    
+auN                         1512263.8  1515186.5 
+L50                         4          4         
+L90                         15         15        
+# N's per 100 kbp           0.00       0.00      
