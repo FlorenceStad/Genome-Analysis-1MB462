@@ -1,3 +1,17 @@
+# Global bioinf files
+*.fq.gz
+*.fastq.gz
+*.bam
+*.sam
+*.vcf
+*.vcf.gz
+
+# LOGS / TEMP
+logs/**
+*.out
+*.log
+*.tmp
+
 # Ignore raw data contents
 data/raw_data/*
 
@@ -13,20 +27,6 @@ data/raw_data/*
 !data/raw_data/**/*.hist
 !data/raw_data/**/*.ktab
 !data/raw_data/**/*.md
-
-# Global bioinf files
-*.fq.gz
-*.fastq.gz
-*.bam
-*.sam
-*.vcf
-*.vcf.gz
-
-# LOGS / TEMP
-logs/**
-*.out
-*.log
-*.tmp
 
 # Analysis outputs (selective ignore)
 # Ignore heavy tool output folders
