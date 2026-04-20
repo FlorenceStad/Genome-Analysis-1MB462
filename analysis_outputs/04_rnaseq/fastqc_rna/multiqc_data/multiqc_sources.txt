@@ -1,0 +1,13 @@
+Module	Section	Sample Name	Source
+FastQC	all_sections	Control_3_r2	/gorilla/home/flst8788/Genome-Analysis-1MB462/analysis/04_rnaseq/fastqc_rna/Control_3_r2_fastqc.zip
+FastQC	all_sections	Heat_treated_42_12h_3_f1	/gorilla/home/flst8788/Genome-Analysis-1MB462/analysis/04_rnaseq/fastqc_rna/Heat_treated_42_12h_3_f1_fastqc.zip
+FastQC	all_sections	Heat_treated_42_12h_1_r2	/gorilla/home/flst8788/Genome-Analysis-1MB462/analysis/04_rnaseq/fastqc_rna/Heat_treated_42_12h_1_r2_fastqc.zip
+FastQC	all_sections	Heat_treated_42_12h_1_f1	/gorilla/home/flst8788/Genome-Analysis-1MB462/analysis/04_rnaseq/fastqc_rna/Heat_treated_42_12h_1_f1_fastqc.zip
+FastQC	all_sections	Control_1_f1	/gorilla/home/flst8788/Genome-Analysis-1MB462/analysis/04_rnaseq/fastqc_rna/Control_1_f1_fastqc.zip
+FastQC	all_sections	Control_2_f1	/gorilla/home/flst8788/Genome-Analysis-1MB462/analysis/04_rnaseq/fastqc_rna/Control_2_f1_fastqc.zip
+FastQC	all_sections	Heat_treated_42_12h_2_r2	/gorilla/home/flst8788/Genome-Analysis-1MB462/analysis/04_rnaseq/fastqc_rna/Heat_treated_42_12h_2_r2_fastqc.zip
+FastQC	all_sections	Control_2_r2	/gorilla/home/flst8788/Genome-Analysis-1MB462/analysis/04_rnaseq/fastqc_rna/Control_2_r2_fastqc.zip
+FastQC	all_sections	Control_1_r2	/gorilla/home/flst8788/Genome-Analysis-1MB462/analysis/04_rnaseq/fastqc_rna/Control_1_r2_fastqc.zip
+FastQC	all_sections	Heat_treated_42_12h_2_f1	/gorilla/home/flst8788/Genome-Analysis-1MB462/analysis/04_rnaseq/fastqc_rna/Heat_treated_42_12h_2_f1_fastqc.zip
+FastQC	all_sections	Heat_treated_42_12h_3_r2	/gorilla/home/flst8788/Genome-Analysis-1MB462/analysis/04_rnaseq/fastqc_rna/Heat_treated_42_12h_3_r2_fastqc.zip
+FastQC	all_sections	Control_3_f1	/gorilla/home/flst8788/Genome-Analysis-1MB462/analysis/04_rnaseq/fastqc_rna/Control_3_f1_fastqc.zip
