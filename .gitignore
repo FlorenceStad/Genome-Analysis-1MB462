@@ -1,4 +1,7 @@
-# Global bioinf files
+########################################
+# GLOBAL BIOINFO HEAVY FILES (never track)
+########################################
+
 *.fq.gz
 *.fastq.gz
 *.bam
@@ -6,46 +9,101 @@
 *.vcf
 *.vcf.gz
 
-# LOGS / TEMP
-logs/**
+
+########################################
+# LOGS / TEMP FILES
+########################################
+
+logs/
 *.out
 *.log
 *.tmp
+slurm-*.out
 
-# Ignore raw data contents
+
+########################################
+# RAW DATA (keep structure but not files)
+########################################
+
 data/raw_data/*
-
-# Allow README
 !data/raw_data/README.md
 
-# Allow subdirectories to be traversed
-!data/raw_data/*/
 
-# Allow specific file types (including symlinks)
-!data/raw_data/**/*.fq.gz
-!data/raw_data/**/*.fastq.gz
-!data/raw_data/**/*.hist
-!data/raw_data/**/*.ktab
-!data/raw_data/**/*.md
+########################################
+# ANALYSIS - default: ignore everything
+########################################
 
-# ANALYSIS (ignore everything)
 analysis/*
 
-# Allow directory structure
+
+########################################
+# BUT allow directory structure
+########################################
+
 !analysis/*/
 !analysis/*/*/
 !analysis/*/*/*/
 
-# Allow ONLY small outputs
+
+########################################
+# =========================
+# PREPROCESSING (FASTQC / MULTIQC)
+# =========================
+########################################
+
+# keep HTML reports
+!analysis/**/fastqc/**/*.html
+!analysis/**/multiqc*.html
+!analysis/**/multiqc_report*.html
+
+# still ignore heavy archives
+*.zip
+
+
+########################################
+# =========================
+# ASSEMBLY (FLYE / BUSCO / QUAST)
+# =========================
+
+# BUSCO: keep ONLY summaries + logs
+!analysis/**/busco*/**/short_summary*.txt
+!analysis/**/busco*/**/logs/*.log
+!analysis/**/busco*/**/assembly_info.txt
+
+# explicitly ignore BUSCO internals
+analysis/**/busco*/**/run_*/
+analysis/**/busco*/**/fragmented_busco_sequences/
+analysis/**/busco*/**/multi_copy_busco_sequences/
+analysis/**/busco*/**/single_copy_busco_sequences/
+*.faa
+*.gff
+
+
+# FLYE: keep key outputs
+!analysis/**/flye*/assembly_info.txt
+!analysis/**/flye*/flye.log
+
+
+# QUAST: keep main reports only
+!analysis/**/quast*/report.html
+!analysis/**/quast*/report.pdf
+!analysis/**/quast*/icarus.html
+!analysis/**/quast*/icarus_viewers/**/*.html
+
+# ignore heavy/internal QUAST stuff
+analysis/**/quast*/basic_stats/
+analysis/**/quast*/transposed_*
+analysis/**/quast*/quast.log
+analysis/**/quast*/report.tsv
+analysis/**/quast*/report.tex
+
+
+########################################
+# ALLOW CLEAN SUMMARY FILES
+########################################
+
 !analysis/**/*.txt
 !analysis/**/*.tsv
 !analysis/**/*.csv
 !analysis/**/*.html
 !analysis/**/*.pdf
-!analysis/**/*.png
-
-# MultiQC
-!analysis/**/multiqc_data/**
-!analysis/**/multiqc_report.html
-
-
