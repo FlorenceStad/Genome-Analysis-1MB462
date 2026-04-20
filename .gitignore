@@ -31,29 +31,20 @@ data/raw_data/*
 analysis/*
 
 ########################################
-# KEEP ONLY CURATED REPORTS
+# IGNORE ALL RAWDATA BY DEFAULT
 ########################################
+data/raw_data/**
+!data/raw_data/README.md
 
-# FastQC / MultiQC
-!analysis/**/fastqc/**/*.html
-!analysis/**/multiqc*.html
+# Ignore bioinformatics files (extra safety)
+# BUT allow symlinks and README
+!data/raw_data/**/*.fq.gz
+!data/raw_data/**/*.fastq.gz
+!data/raw_data/**/*.hist
+!data/raw_data/**/*.ktab
+!data/raw_data/**/*.md
 
-# QUAST final reports only
-!analysis/**/quast*/report.html
-!analysis/**/quast*/report.pdf
 
-# BUSCO summaries only
-!analysis/**/busco*/**/short_summary*.txt
-!analysis/**/busco*/**/short_summary*.json
 
-########################################
-# NEVER TRACK TOOL INTERNALS
-########################################
-analysis/**/busco*/run_*/
-analysis/**/quast*/basic_stats/
-analysis/**/flye*/
-analysis/**/braker*/
-analysis/**/repeatmasker*/
-analysis/**/hisat2*/
-analysis/**/stringtie*/
-analysis/**/pilon*/
+
+
