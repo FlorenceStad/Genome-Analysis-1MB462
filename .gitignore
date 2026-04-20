@@ -29,14 +29,14 @@ data/raw_data/*
 !data/raw_data/**/*.md
 
 # ANALYSIS (ignore everything)
-analysis/**
+analysis/*
 
-# Allow directory traversal
+# Allow directory structure
 !analysis/*/
 !analysis/*/*/
 !analysis/*/*/*/
 
-# Allow ONLY useful outputs
+# Allow ONLY small outputs
 !analysis/**/*.txt
 !analysis/**/*.tsv
 !analysis/**/*.csv
