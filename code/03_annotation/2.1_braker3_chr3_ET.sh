@@ -5,40 +5,38 @@
 #SBATCH -c 2
 #SBATCH -t 24:00:00
 #SBATCH --mem=64G
-#SBATCH -J braker_chr3
-#SBATCH -o /home/flst8788/Genome-Analysis-1MB462/logs/slurm-%j_braker.out
+#SBATCH -J braker_chr3_ET
+#SBATCH -o /home/flst8788/Genome-Analysis-1MB462/logs/slurm-%j_braker_ET.out
 
-# MODULES (Singularity-based BRAKER)
+# Load modules
 module load SAMtools/1.22-GCC-13.3.0
 
-# PROJECT PATHS
+# Paths
 GENOME=/home/flst8788/Genome-Analysis-1MB462/analysis/03_annotation/repeatmasker_chr3/pilon_chr3.fasta.masked
 RNA_BAM_DIR=/home/flst8788/Genome-Analysis-1MB462/analysis/04_rnaseq/hisat2_rna
-OUTDIR=/home/flst8788/Genome-Analysis-1MB462/analysis/03_annotation/braker_chr3
+OUTDIR=/home/flst8788/Genome-Analysis-1MB462/analysis/03_annotation/braker_chr3_ET
 BRAKER_SIF=/proj/uppmax2026-1-61/Genome_Analysis/2_Zhou_2023/braker3.sif
-PROTEIN_DB=/proj/uppmax2026-1-61/Genome_Analysis/2_Zhou_2023/Ceratodon_purpureus/C_purpureus.faa
 
-# FIX TMPDIR
+# Create output + tmp
+mkdir -p $OUTDIR
 export TMPDIR=$OUTDIR/tmp
 mkdir -p $TMPDIR
 
-mkdir -p $OUTDIR
 cd $OUTDIR
 
-# CHECK INPUTS
 echo "Checking genome..."
 ls -lh $GENOME
 
 echo "Checking BAM files..."
 ls $RNA_BAM_DIR/*.sorted.bam
 
-# COLLECT BAM FILES
+# Collect BAM files
 BAM_FILES=$(ls $RNA_BAM_DIR/*.sorted.bam | tr '\n' ',' | sed 's/,$//')
 
 echo "BAM list:"
 echo $BAM_FILES
- 
-# RUN BRAKER3
+
+# Run BRAKER3 (ET-mode: ONLY RNA, no proteins)
 singularity exec \
 -B $HOME/augustus_config:/opt/Augustus/config \
 -B $HOME:/home/$USER \
@@ -46,10 +44,9 @@ singularity exec \
 $BRAKER_SIF braker.pl \
     --genome=$GENOME \
     --bam=$BAM_FILES \
-    --prot_seq=$PROTEIN_DB \
-    --species=chr3_moss_v2 \
+    --species=chr3_moss_ET \
     --softmasking \
     --threads=2 \
-    --workingdir=$OUTDIR 
+    --workingdir=$OUTDIR
 
-echo "BRAKER finished successfully! I think"
+echo "BRAKER ET-mode finished!"
