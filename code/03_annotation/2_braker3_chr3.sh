@@ -47,10 +47,9 @@ $BRAKER_SIF braker.pl \
     --genome=$GENOME \
     --bam=$BAM_FILES \
     --prot_seq=$PROTEIN_DB \
-    --species=chr3_moss_cleaned \
+    --species=chr3_moss_Florence \
     --softmasking \
-    --threads 2 \
-    --workingdir=$OUTDIR \
-    --skipOptimize 
+    --threads=2 \
+    --workingdir=$OUTDIR 
 
 echo "BRAKER finished successfully! I think"
