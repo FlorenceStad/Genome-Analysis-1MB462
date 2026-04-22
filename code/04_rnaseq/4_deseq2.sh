@@ -8,6 +8,9 @@
 #SBATCH -J deseq2_chr3
 #SBATCH -o logs/slurm-%j_deseq2.out
 
-module load R/4.3.1
+module load R/4.4.2-gfbf-2024a
 
-Rscript /home/flst8788/Genome-Analysis-1MB462/code/04_rnaseq/deseq2_chr3.R
+export R_LIBS_USER=/gorilla/home/flst8788/R/x86_64-pc-linux-gnu-library/4.4
+
+Rscript /home/flst8788/Genome-Analysis-1MB462/code/04_rnaseq/4.0_deseq2.R
+

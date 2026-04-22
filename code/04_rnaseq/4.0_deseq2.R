@@ -1,57 +1,92 @@
 library(DESeq2)
 
-# Load count data
+# =========================
+# 1. LOAD COUNTS
+# =========================
+
 counts <- read.table(
-  "/home/flst8788/Genome-Analysis-1MB462/analysis/04_rnaseq/counts/counts.txt",
+  "/home/flst8788/Genome-Analysis-1MB462/analysis/04_rnaseq/featurecounts/counts.txt",
   header = TRUE,
-  comment.char = "#"
-  stringAsFactors = FALSE
+  comment.char = "#",
+  check.names = FALSE
 )
 
-# Remove annotation columns from featureCounts
 countData <- counts[, -(1:6)]
 rownames(countData) <- counts$Geneid
 
-# Clean column names (remove paths if present)
+# =========================
+# 2. FIX SAMPLE NAMES (VIKTIGT)
+# =========================
+
+# tar bort hela pathen
 colnames(countData) <- basename(colnames(countData))
+
+# tar bort featureCounts suffix
 colnames(countData) <- sub("\\.sorted\\.bam$", "", colnames(countData))
 
-# Load metadata
+# säkerhetskoll
+colnames(countData) <- trimws(colnames(countData))
+
+# =========================
+# 3. LOAD METADATA
+# =========================
+
 coldata <- read.table(
-  "/home/flst8788/Genome-Analysis-1MB462/data/metadata/rna_metadata.tsv",
+  "/home/flst8788/Genome-Analysis-1MB462/data/meta_data/rna_metadata.tsv",
   header = TRUE,
-  row.names = 1
+  sep = "\t",
   stringsAsFactors = FALSE
 )
 
-# Ensure same order
-coldata <- coldata[colnames(counts), ]
+rownames(coldata) <- coldata$sample
+coldata$sample <- NULL
 
-if (!all(colnames(countData) == rownames(coldata))) {
-  stop("ERROR: sample names in counts and metadata do not match!")
+rownames(coldata) <- trimws(rownames(coldata))
+
+# =========================
+# 4. ALIGN SAMPLES
+# =========================
+
+coldata <- coldata[colnames(countData), , drop = FALSE]
+
+# HARD CHECK (stopp direkt om fel)
+if (!identical(colnames(countData), rownames(coldata))) {
+  cat("COUNT NAMES:\n")
+  print(colnames(countData))
+
+  cat("META NAMES:\n")
+  print(rownames(coldata))
+
+  stop("Sample names do not match after cleaning")
 }
 
-# Create DESeq dataset
+# =========================
+# 5. DESEQ2 ANALYSIS
+# =========================
+
 dds <- DESeqDataSetFromMatrix(
   countData = round(countData),
   colData = coldata,
   design = ~ condition
 )
 
-# Filter low counts
+# filter low counts
 dds <- dds[rowSums(counts(dds)) > 10, ]
 
-# Run DESeq2
+# run model
 dds <- DESeq(dds)
 
-# Get results
+# results
 res <- results(dds)
 
-# Save results
-dir.create("/home/flst8788/Genome-Analysis-1MB462/analysis/04_rnaseq/deseq2",
-           showWarnings = FALSE, recursive = TRUE)
+# =========================
+# 6. OUTPUT
+# =========================
+
+outdir <- "/home/flst8788/Genome-Analysis-1MB462/analysis/04_rnaseq/deseq2"
+dir.create(outdir, showWarnings = FALSE, recursive = TRUE)
 
 write.csv(as.data.frame(res),
-          file = "/home/flst8788/Genome-Analysis-1MB462/analysis/04_rnaseq/deseq2/deseq2_results.csv")
+          file = file.path(outdir, "deseq2_results.csv"))
 
 summary(res)
