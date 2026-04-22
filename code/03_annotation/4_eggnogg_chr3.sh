@@ -27,7 +27,7 @@ emapper.py \
     --output_dir $OUTDIR \
     --itype proteins \
     --cpu 2 \
-    --sensmode ultra \
+    --sensmode ultra-sensitive \
     --override \
     --go_evidence all \
     --pfam_realign hmm \
