@@ -9,16 +9,16 @@
 #SBATCH -o logs/slurm-%j_featurecounts.out
 
 # Load module
-module load Subread/2.0.6
+module load Subread/2.1.1-GCC-13.3.0
 
 # INPUTS
 BAM_DIR=/home/flst8788/Genome-Analysis-1MB462/analysis/04_rnaseq/hisat2_rna
 
-# ⚠️Finns ej än
-GTF=/home/flst8788/Genome-Analysis-1MB462/analysis/03_annotation/braker_chr3/braker.gtf
+# FT fil
+GTF=/home/flst8788/Genome-Analysis-1MB462/analysis/03_annotation/braker_chr3_ET/braker.gtf
 
 # OUTPUT
-OUTDIR=/home/flst8788/Genome-Analysis-1MB462/analysis/04_rnaseq/counts
+OUTDIR=/home/flst8788/Genome-Analysis-1MB462/analysis/04_rnaseq/featurecounts
 mkdir -p $OUTDIR
 
 # RUN featureCounts
