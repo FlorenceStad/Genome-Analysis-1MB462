@@ -1,0 +1,15 @@
+Status	/home/flst8788/Genome-Analysis-1MB462/analysis/04_rnaseq/hisat2_rna/Control_1.sorted.bam	/home/flst8788/Genome-Analysis-1MB462/analysis/04_rnaseq/hisat2_rna/Control_2.sorted.bam	/home/flst8788/Genome-Analysis-1MB462/analysis/04_rnaseq/hisat2_rna/Control_3.sorted.bam	/home/flst8788/Genome-Analysis-1MB462/analysis/04_rnaseq/hisat2_rna/Heat_treated_42_12h_1.sorted.bam	/home/flst8788/Genome-Analysis-1MB462/analysis/04_rnaseq/hisat2_rna/Heat_treated_42_12h_2.sorted.bam	/home/flst8788/Genome-Analysis-1MB462/analysis/04_rnaseq/hisat2_rna/Heat_treated_42_12h_3.sorted.bam
+Assigned	3232303	2872387	3070227	3016487	2918711	3284137
+Unassigned_Unmapped	39294521	40250874	41926327	40571238	39491363	40282014
+Unassigned_Read_Type	0	0	0	0	0	0
+Unassigned_Singleton	0	0	0	0	0	0
+Unassigned_MappingQuality	0	0	0	0	0	0
+Unassigned_Chimera	0	0	0	0	0	0
+Unassigned_FragmentLength	0	0	0	0	0	0
+Unassigned_Duplicate	0	0	0	0	0	0
+Unassigned_MultiMapping	830130	611011	754398	858854	731740	696861
+Unassigned_Secondary	0	0	0	0	0	0
+Unassigned_NonSplit	0	0	0	0	0	0
+Unassigned_NoFeatures	480775	548723	489729	524054	502339	557249
+Unassigned_Overlapping_Length	0	0	0	0	0	0
+Unassigned_Ambiguity	55681	55272	63902	59595	62958	61139
