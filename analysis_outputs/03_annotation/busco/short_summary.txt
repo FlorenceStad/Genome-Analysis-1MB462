@@ -1,0 +1,19 @@
+# BUSCO version is: 5.8.2 
+# The lineage dataset is: embryophyta_odb10 (Creation date: 2024-01-08, number of genomes: 50, number of BUSCOs: 1614)
+# Summarized benchmarking in BUSCO notation for file /home/flst8788/Genome-Analysis-1MB462/analysis/03_annotation/braker_chr3_ET/braker.aa
+# BUSCO was run in mode: proteins
+
+	***** Results: *****
+
+	C:9.5%[S:6.9%,D:2.7%],F:0.6%,M:89.9%,n:1614	   
+	154	Complete BUSCOs (C)			   
+	111	Complete and single-copy BUSCOs (S)	   
+	43	Complete and duplicated BUSCOs (D)	   
+	9	Fragmented BUSCOs (F)			   
+	1451	Missing BUSCOs (M)			   
+	1614	Total BUSCO groups searched		   
+
+Dependencies and versions:
+	hmmsearch: 3.4
+	python: sys.version_info(major=3, minor=12, micro=3, releaselevel='final', serial=0)
+	busco: 5.8.2
