@@ -15,7 +15,7 @@ countData <- counts[, -(1:6)]
 rownames(countData) <- counts$Geneid
 
 # =========================
-# 2. FIX SAMPLE NAMES (VIKTIGT)
+# 2. FIX SAMPLE NAMES
 # =========================
 
 # tar bort hela pathen
