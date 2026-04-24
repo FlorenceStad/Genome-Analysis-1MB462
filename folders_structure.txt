@@ -1,120 +1,124 @@
+[flst8788@pelle1 Genome-Analysis-1MB462]$ tree -d
 .
 ├── analysis
 │   ├── 01_preprocessing
 │   │   ├── fastqc_raw_chr3
-│   │   │   ├── chr3_illumina_R1_fastqc.html
-│   │   │   ├── chr3_illumina_R1_fastqc.zip
-│   │   │   ├── chr3_illumina_R2_fastqc.html
-│   │   │   ├── chr3_illumina_R2_fastqc.zip
-│   │   │   └── multiqc_report_1.html
+│   │   │   ├── hic
+│   │   │   ├── illumina
+│   │   │   └── nanopore
 │   │   ├── fastqc_raw_wg
-│   │   │   ├── CRR809859_f1_fastqc.html
-│   │   │   ├── CRR809859_f1_fastqc.zip
-│   │   │   ├── CRR809859_r2_fastqc.html
-│   │   │   ├── CRR809859_r2_fastqc.zip
-│   │   │   └── multiqc_report.html
 │   │   ├── fastqc_trimmed_chr3
-│   │   │   ├── chr3_R1_paired_fastqc.html
-│   │   │   ├── chr3_R1_paired_fastqc.zip
-│   │   │   ├── chr3_R1_unpaired_fastqc.html
-│   │   │   ├── chr3_R1_unpaired_fastqc.zip
-│   │   │   ├── chr3_R2_paired_fastqc.html
-│   │   │   ├── chr3_R2_paired_fastqc.zip
-│   │   │   ├── chr3_R2_unpaired_fastqc.html
-│   │   │   ├── chr3_R2_unpaired_fastqc.zip
-│   │   │   └── multiqc_report_2.html
-│   │   ├── README.md
-│   │   ├── slurm-4866056.out
-│   │   ├── slurm-4866067.out
 │   │   └── trimmed_chr3
-│   │       ├── chr3_R1_paired.fq.gz
-│   │       ├── chr3_R1_unpaired.fq.gz
-│   │       ├── chr3_R2_paired.fq.gz
-│   │       └── chr3_R2_unpaired.fq.gz
-│   └── 02_assembly
-│       ├── busco_chr3
-│       ├── bwa_chr3
-│       │   ├── aln.sorted.bam
-│       │   └── aln.sorted.bam.bai
-│       ├── flye_chr3
-│       │   ├── 00-assembly
-│       │   │   ├── draft_assembly.fasta
-│       │   │   └── draft_assembly.fasta.fai
-│       │   ├── 10-consensus
-│       │   │   ├── consensus.fasta
-│       │   │   ├── minimap.bam.csi
-│       │   │   └── minimap.stderr
-│       │   ├── 20-repeat
-│       │   │   ├── graph_after_rr.gv
-│       │   │   ├── graph_before_rr.fasta
-│       │   │   ├── graph_before_rr.gfa
-│       │   │   ├── graph_before_rr.gv
-│       │   │   ├── read_alignment_dump
-│       │   │   ├── repeat_graph_dump
-│       │   │   └── repeat_graph_edges.fasta
-│       │   ├── 30-contigger
-│       │   │   ├── contigs.fasta
-│       │   │   ├── contigs.fasta.fai
-│       │   │   ├── contigs_stats.txt
-│       │   │   ├── graph_final.fasta
-│       │   │   ├── graph_final.gfa
-│       │   │   ├── graph_final.gv
-│       │   │   └── scaffolds_links.txt
-│       │   ├── 40-polishing
-│       │   │   ├── base_coverage.bed.gz
-│       │   │   ├── contigs_stats.txt
-│       │   │   ├── edges_aln.bam.csi
-│       │   │   ├── filtered_contigs.fasta
-│       │   │   ├── filtered_contigs.fasta.fai
-│       │   │   ├── filtered_stats.txt
-│       │   │   ├── minimap_1.bam.csi
-│       │   │   ├── minimap.stderr
-│       │   │   └── polished_edges.gfa
-│       │   ├── assembly.fasta
-│       │   ├── assembly.fasta.amb
-│       │   ├── assembly.fasta.ann
-│       │   ├── assembly.fasta.bwt
-│       │   ├── assembly.fasta.pac
-│       │   ├── assembly.fasta.sa
-│       │   ├── assembly_graph.gfa
-│       │   ├── assembly_graph.gv
-│       │   ├── assembly_info.txt
-│       │   ├── flye.log
-│       │   └── params.json
-│       ├── pilon_chr3
-│       └── quast_chr3
+│   ├── 02_assembly
+│   │   ├── busco_chr3
+│   │   │   └── busco_chr3
+│   │   │       ├── logs
+│   │   │       └── run_embryophyta_odb10
+│   │   │           ├── busco_sequences
+│   │   │           │   ├── fragmented_busco_sequences
+│   │   │           │   ├── multi_copy_busco_sequences
+│   │   │           │   └── single_copy_busco_sequences
+│   │   │           ├── hmmer_output
+│   │   │           └── miniprot_output
+│   │   │               └── translated_proteins
+│   │   ├── bwa_chr3
+│   │   ├── flye_chr3
+│   │   │   ├── 00-assembly
+│   │   │   ├── 10-consensus
+│   │   │   ├── 20-repeat
+│   │   │   ├── 30-contigger
+│   │   │   └── 40-polishing
+│   │   ├── pilon_chr3
+│   │   └── quast_chr3
+│   │       ├── basic_stats
+│   │       └── icarus_viewers
+│   ├── 03_annotation
+│   │   ├── braker_chr3
+│   │   │   ├── errors
+│   │   │   ├── GeneMark-ETP
+│   │   │   │   ├── arx
+│   │   │   │   ├── data
+│   │   │   │   ├── etp_data
+│   │   │   │   ├── proteins.fa
+│   │   │   │   │   ├── etr
+│   │   │   │   │   │   ├── 1
+│   │   │   │   │   │   │   └── model
+│   │   │   │   │   │   └── 2
+│   │   │   │   │   │       └── model
+│   │   │   │   │   ├── hc
+│   │   │   │   │   │   └── regions
+│   │   │   │   │   ├── model
+│   │   │   │   │   ├── nonhc
+│   │   │   │   │   │   ├── for_prothint
+│   │   │   │   │   │   │   ├── data
+│   │   │   │   │   │   │   │   └── training
+│   │   │   │   │   │   │   ├── info
+│   │   │   │   │   │   │   ├── output
+│   │   │   │   │   │   │   │   ├── data
+│   │   │   │   │   │   │   │   └── gmhmm
+│   │   │   │   │   │   │   └── run
+│   │   │   │   │   │   ├── pred_m
+│   │   │   │   │   │   │   ├── data
+│   │   │   │   │   │   │   │   └── training
+│   │   │   │   │   │   │   ├── info
+│   │   │   │   │   │   │   ├── output
+│   │   │   │   │   │   │   │   ├── data
+│   │   │   │   │   │   │   │   └── gmhmm
+│   │   │   │   │   │   │   └── run
+│   │   │   │   │   │   ├── prothint
+│   │   │   │   │   │   │   ├── diamond
+│   │   │   │   │   │   │   └── Spaln
+│   │   │   │   │   │   └── regions
+│   │   │   │   │   └── penalty
+│   │   │   │   └── rnaseq
+│   │   │   │       ├── gmst
+│   │   │   │       ├── hints
+│   │   │   │       │   └── proteins.fa
+│   │   │   │       │       └── prothint
+│   │   │   │       │           ├── diamond
+│   │   │   │       │           └── Spaln
+│   │   │   │       ├── hisat2
+│   │   │   │       └── stringtie
+│   │   │   ├── species
+│   │   │   ├── tmp
+│   │   │   └── tmp_opt_chr3_moss_v2
+│   │   ├── braker_chr3_ET
+│   │   │   ├── Augustus
+│   │   │   ├── errors
+│   │   │   ├── GeneMark-ET
+│   │   │   ├── species
+│   │   │   │   └── chr3_moss_ET
+│   │   │   └── tmp
+│   │   ├── busco_braker_ET
+│   │   │   └── busco_braker_ET
+│   │   │       ├── logs
+│   │   │       └── run_embryophyta_odb10
+│   │   │           ├── busco_sequences
+│   │   │           │   ├── fragmented_busco_sequences
+│   │   │           │   ├── multi_copy_busco_sequences
+│   │   │           │   └── single_copy_busco_sequences
+│   │   │           └── hmmer_output
+│   │   │               ├── initial_run_results
+│   │   │               └── rerun_results
+│   │   ├── eggnog_chr3
+│   │   │   └── emappertmp_dmdn_2us1j0qx
+│   │   └── repeatmasker_chr3
+│   └── 04_rnaseq
+│       ├── deseq2
+│       ├── deseq2_qc
+│       ├── fastqc_rna
+│       │   └── multiqc_data
+│       ├── featurecounts
+│       └── hisat2_rna
 ├── code
 │   ├── 01_preprocessing
-│   │   ├── 1_fastqc_WG_raw.sh
-│   │   ├── 2_fastqc_chr3_raw.sh
-│   │   ├── 3_trimmomatic_chr3.sh
-│   │   ├── 4_fastqc_chr3_trimmed.sh
-│   │   └── README.md
-│   └── 02_assembly
-│       ├── 1_flye_chr3.sh
-│       ├── 2_bwa_chr3.sh
-│       ├── 3_pilon_chr3.sh
-│       ├── 4_quast_chr3.sh
-│       ├── 5_busco_chr3.sh
-│       └── README.md
+│   ├── 02_assembly
+│   ├── 03_annotation
+│   └── 04_rnaseq
 ├── data
 │   ├── meta_data
 │   └── raw_data
-│       ├── chr3_clean_nanopore.fq.gz -> /proj/uppmax2026-1-61/Genome_Analysis/2_Zhou_2023/reads/genomics_chr3_data/chr3_clean_nanopore.fq.gz
-│       ├── chr3_hiC_R1.fastq.gz -> /proj/uppmax2026-1-61/Genome_Analysis/2_Zhou_2023/reads/genomics_chr3_data/chr3_hiC_R1.fastq.gz
-│       ├── chr3_hiC_R2.fastq.gz -> /proj/uppmax2026-1-61/Genome_Analysis/2_Zhou_2023/reads/genomics_chr3_data/chr3_hiC_R2.fastq.gz
-│       ├── chr3_illumina_R1.fastq.gz -> /proj/uppmax2026-1-61/Genome_Analysis/2_Zhou_2023/reads/genomics_chr3_data/chr3_illumina_R1.fastq.gz
-│       ├── chr3_illumina_R2.fastq.gz -> /proj/uppmax2026-1-61/Genome_Analysis/2_Zhou_2023/reads/genomics_chr3_data/chr3_illumina_R2.fastq.gz
-│       ├── chr3_nanopore_15mers.hist -> /proj/uppmax2026-1-61/Genome_Analysis/2_Zhou_2023/reads/genomics_chr3_data/chr3_nanopore_15mers.hist
-│       ├── chr3_nanopore_15mers.ktab -> /proj/uppmax2026-1-61/Genome_Analysis/2_Zhou_2023/reads/genomics_chr3_data/chr3_nanopore_15mers.ktab
-│       ├── CRR809859_f1.fq.gz -> /proj/uppmax2026-1-61/Genome_Analysis/2_Zhou_2023/reads/whole_genome_data/CRR809859_f1.fq.gz
-│       ├── CRR809859_r2.fq.gz -> /proj/uppmax2026-1-61/Genome_Analysis/2_Zhou_2023/reads/whole_genome_data/CRR809859_r2.fq.gz
-│       └── README.md
-├── folders_structure.txt
-├── logs
-│   ├── slurm-4873452.out
-│   ├── slurm-4875584_bwa.out
-│   └── slurm-4876304_pilon.out
-└── README.md
+│       └── rna
+└── logs
 
-24 directories, 93 files
+120 directories
