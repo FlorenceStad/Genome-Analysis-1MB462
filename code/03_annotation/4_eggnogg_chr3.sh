@@ -14,23 +14,23 @@ module load eggnog-mapper/2.1.13-gfbf-2024a
 # paths
 BRAKER_DIR=/home/flst8788/Genome-Analysis-1MB462/analysis/03_annotation/braker_chr3_ET
 PROTEINS=$BRAKER_DIR/braker.aa
+DB=/sw/data/eggNOG/5.0.0/rackham/
 
 OUTDIR=/home/flst8788/Genome-Analysis-1MB462/analysis/03_annotation/eggnog_chr3
 mkdir -p $OUTDIR
 cd $OUTDIR
 
-
 #Run eggNOG-mapper
 emapper.py \
     -i $PROTEINS \
     -o chr3_eggnog \
-    -m hmmer \
-    -d viridiplantae \
     --output_dir $OUTDIR \
     --itype proteins \
     --cpu 2 \
+    -m hmmer \
+    --data_dir $DB \
     --sensmode ultra-sensitive \
     --override \
     --go_evidence all \
     --pfam_realign realign \
-    --usemem 
+    --usemem
