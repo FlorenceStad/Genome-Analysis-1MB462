@@ -27,10 +27,9 @@ emapper.py \
     --output_dir $OUTDIR \
     --itype proteins \
     --cpu 2 \
-    -m hmmer \
-    --data_dir $DB \
+    -m diamond \
+    --data_dir /sw/data/eggNOG/5.0.0/rackham \
     --sensmode ultra-sensitive \
     --override \
     --go_evidence all \
-    --pfam_realign realign \
-    --usemem
+    --pfam_realign realign 
