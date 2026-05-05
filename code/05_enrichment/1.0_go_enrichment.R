@@ -1,7 +1,13 @@
+# =========================
+# 0. LIBRARIES
+# =========================
 library(dplyr)
 library(clusterProfiler)
 
+# =========================
 # 1. LOAD DESEQ2 RESULTS
+# =========================
+
 res <- read.csv(
   "/home/flst8788/Genome-Analysis-1MB462/analysis/04_rnaseq/deseq2_qc/deseq2_qc_results.csv",
   row.names = 1
@@ -9,18 +15,29 @@ res <- read.csv(
 
 res <- na.omit(res)
 
-# 2. CLEAN GENE IDS 
+# =========================
+# 2. CLEAN GENE IDS (IMPORTANT FIX)
+# =========================
 clean_id <- function(x) sub("\\..*", "", x)
 
-res_ids <- clean_id(rownames(res))
+rownames(res) <- clean_id(rownames(res))
 
+# =========================
 # 3. DEFINE SIGNIFICANT GENES
+# =========================
+
 sig <- res[!is.na(res$padj) & res$padj < 0.05, ]
 
-up_genes <- clean_id(rownames(sig[sig$log2FoldChange > 0, ]))
+up_genes   <- clean_id(rownames(sig[sig$log2FoldChange > 0, ]))
 down_genes <- clean_id(rownames(sig[sig$log2FoldChange < 0, ]))
 
+cat("UP genes:", length(up_genes), "\n")
+cat("DOWN genes:", length(down_genes), "\n")
+
+# =========================
 # 4. LOAD EGGNOG
+# =========================
+
 eggnog <- read.delim(
   "/home/flst8788/Genome-Analysis-1MB462/analysis/03_annotation/eggnog_chr3/chr3_eggnog.emapper.annotations",
   header = FALSE,
@@ -30,81 +47,72 @@ eggnog <- read.delim(
   stringsAsFactors = FALSE
 )
 
-# 5. CLEAN EGGNOG IDS
-eggnog$gene <- clean_id(eggnog$V1)
+# =========================
+# 5. BUILD MAPPINGS
+# =========================
 
-# 6. BUILD GENE → KOG TABLE
 gene2kog <- data.frame(
-  gene = eggnog$gene,
-  term = eggnog$V7
+  gene = clean_id(eggnog$V1),
+  kog  = eggnog$V7,
+  stringsAsFactors = FALSE
 )
 
-gene2kog <- gene2kog[gene2kog$term != "-" & gene2kog$term != "", ]
+gene2kog <- gene2kog[gene2kog$kog != "-" & gene2kog$kog != "", ]
 
-# 7. BUILD GENE → GO TABLE (IMPORTANT FOR HIGHER GRADE)
-go_raw <- data.frame(
-  gene = eggnog$gene,
-  go = eggnog$V6
+term2gene <- data.frame(
+  term = gene2kog$kog,
+  gene = gene2kog$gene
 )
 
-go_raw <- go_raw[go_raw$go != "-" & !is.na(go_raw$go), ]
+# =========================
+# 6. CHECK OVERLAP (CRITICAL DEBUG STEP)
+# =========================
 
-# split GO terms (comma-separated)
-go_terms <- data.frame(
-  gene = rep(go_raw$gene, sapply(strsplit(go_raw$go, ","), length)),
-  term = unlist(strsplit(go_raw$go, ","))
-)
+cat("UP overlap:", length(intersect(up_genes, gene2kog$gene)), "\n")
+cat("DOWN overlap:", length(intersect(down_genes, gene2kog$gene)), "\n")
 
-go_terms <- go_terms[grepl("^GO:", go_terms$term), ]
+# =========================
+# 7. ENRICHMENT
+# =========================
 
-# 8. ENRICHMENT FUNCTION
-run_enrich <- function(genes, term2gene) {
-  enricher(
-    gene = genes,
-    TERM2GENE = term2gene
-  )
-}
+ego_up <- enricher(up_genes, TERM2GENE = term2gene)
+ego_down <- enricher(down_genes, TERM2GENE = term2gene)
 
-# 9. RUN ENRICHMENT
-ego_up_kog <- run_enrich(up_genes, gene2kog)
-ego_down_kog <- run_enrich(down_genes, gene2kog)
+# =========================
+# 8. OUTPUT DIR
+# =========================
 
-ego_up_go <- run_enrich(up_genes, go_terms)
-ego_down_go <- run_enrich(down_genes, go_terms)
-
-# 10. OUTPUT
-outdir <- "/home/flst8788/Genome-Analysis-1MB462/analysis/05_enrichment/results"
+outdir <- "/home/flst8788/Genome-Analysis-1MB462/analysis/05_enrichment/kog_enrichment"
 dir.create(outdir, recursive = TRUE, showWarnings = FALSE)
 
-write.csv(as.data.frame(ego_up_kog), file.path(outdir, "up_kog.csv"))
-write.csv(as.data.frame(ego_down_kog), file.path(outdir, "down_kog.csv"))
+# =========================
+# 9. SAVE RESULTS (SAFE CHECK)
+# =========================
 
-write.csv(as.data.frame(ego_up_go), file.path(outdir, "up_go.csv"))
-write.csv(as.data.frame(ego_down_go), file.path(outdir, "down_go.csv"))
+if (!is.null(ego_up) && nrow(as.data.frame(ego_up)) > 0) {
+  write.csv(as.data.frame(ego_up),
+            file.path(outdir, "kog_up.csv"))
 
-# 11. SAFE PLOTTING 
-safe_barplot <- function(obj, title, file) {
-  if (!is.null(obj) && nrow(as.data.frame(obj)) > 0) {
-    pdf(file)
-    barplot(obj, showCategory = 10, title = title)
-    dev.off()
-  } else {
-    cat("Skipping plot:", title, "- no enrichment found\n")
-  }
+  pdf(file.path(outdir, "kog_up_barplot.pdf"))
+  barplot(ego_up, showCategory = 10, title = "Upregulated genes (KOG)")
+  dev.off()
+} else {
+  cat("No enrichment found for UP genes\n")
 }
-# KOG plots
-safe_barplot(ego_up_kog,
-             "Upregulated genes (KOG)",
-             file.path(outdir, "up_kog.pdf"))
 
-safe_barplot(ego_down_kog,
-             "Downregulated genes (KOG)",
-             file.path(outdir, "down_kog.pdf"))
-# GO plots 
-safe_barplot(ego_up_go,
-             "Upregulated genes (GO)",
-             file.path(outdir, "up_go.pdf"))
+if (!is.null(ego_down) && nrow(as.data.frame(ego_down)) > 0) {
+  write.csv(as.data.frame(ego_down),
+            file.path(outdir, "kog_down.csv"))
 
-safe_barplot(ego_down_go,
-             "Downregulated genes (GO)",
-             file.path(outdir, "down_go.pdf"))
+  pdf(file.path(outdir, "kog_down_barplot.pdf"))
+  barplot(ego_down, showCategory = 10, title = "Downregulated genes (KOG)")
+  dev.off()
+} else {
+  cat("No enrichment found for DOWN genes\n")
+}
+
+# =========================
+# 10. DONE
+# =========================
+
+cat("\n===== ENRICHMENT COMPLETE =====\n")
