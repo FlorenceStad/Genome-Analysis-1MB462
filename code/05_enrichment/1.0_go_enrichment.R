@@ -70,6 +70,16 @@ run_enrich <- function(gene_list, term2gene) {
 # =========================
 # 6. RUN ENRICHMENT
 # =========================
+up_genes <- trimws(up_genes)
+down_genes <- trimws(down_genes)
+
+gene2kog$gene <- trimws(gene2kog$gene)
+
+up_genes <- gsub("\\s+", "", up_genes)
+down_genes <- gsub("\\s+", "", down_genes)
+gene2kog$gene <- gsub("\\s+", "", gene2kog$gene)
+
+length(intersect(up_genes, gene2kog$gene))
 
 ego_up <- enricher(
   gene = up_genes,
