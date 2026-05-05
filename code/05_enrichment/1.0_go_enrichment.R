@@ -74,9 +74,19 @@ cat("DOWN overlap:", length(intersect(down_genes, gene2kog$gene)), "\n")
 # =========================
 # 7. ENRICHMENT
 # =========================
+ego_up <- enricher(
+  gene = up_genes,
+  TERM2GENE = term2gene,
+  pvalueCutoff = 0.5,
+  qvalueCutoff = 0.5
+)
 
-ego_up <- enricher(up_genes, TERM2GENE = term2gene)
-ego_down <- enricher(down_genes, TERM2GENE = term2gene)
+ego_down <- enricher(
+  gene = down_genes,
+  TERM2GENE = term2gene,
+  pvalueCutoff = 0.5,
+  qvalueCutoff = 0.5
+)
 
 # =========================
 # 8. OUTPUT DIR
