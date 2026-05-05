@@ -1,172 +1,132 @@
-# =========================
-# 0. LIBRARIES
-# =========================
 library(dplyr)
 library(clusterProfiler)
 
 # =========================
-# 1. PATHS (EDIT ONCE HERE)
+# 1. PATHS (EDIT HERE ONLY)
 # =========================
 
-deseq_path <- "/home/flst8788/Genome-Analysis-1MB462/analysis/04_rnaseq/deseq2_qc/deseq2_qc_results.csv"
-
-eggnog_path <- "/home/flst8788/Genome-Analysis-1MB462/analysis/03_annotation/eggnog_chr3/chr3_eggnog.emapper.annotations"
-
+res_file <- "/home/flst8788/Genome-Analysis-1MB462/analysis/04_rnaseq/deseq2_qc/deseq2_qc_results.csv"
+eggnog_file <- "/home/flst8788/Genome-Analysis-1MB462/analysis/03_annotation/eggnog_chr3/chr3_eggnog.emapper.annotations"
 outdir <- "/home/flst8788/Genome-Analysis-1MB462/analysis/05_enrichment"
+
 dir.create(outdir, recursive = TRUE, showWarnings = FALSE)
-
-kog_dir <- file.path(outdir, "kog_enrichment")
-go_dir  <- file.path(outdir, "go_enrichment")
-
-dir.create(kog_dir, recursive = TRUE, showWarnings = FALSE)
-dir.create(go_dir, recursive = TRUE, showWarnings = FALSE)
 
 # =========================
 # 2. LOAD DATA
 # =========================
 
-res <- read.csv(deseq_path, row.names = 1)
-
-eggnog <- read.delim(
-  eggnog_path,
-  header = FALSE,
-  comment.char = "#",
-  fill = TRUE,
-  quote = "",
-  stringsAsFactors = FALSE
-)
+res <- read.csv(res_file, row.names = 1)
+eggnog <- read.delim(eggnog_file,
+                     header = FALSE,
+                     comment.char = "#",
+                     fill = TRUE,
+                     quote = "",
+                     stringsAsFactors = FALSE)
 
 # =========================
-# 3. CLEAN GENE IDS
+# 3. CLEAN IDS (CRITICAL FIX)
 # =========================
 
-clean_id <- function(x) sub("\\..*", "", x)
+clean <- function(x) sub("\\..*", "", x)
 
-res_ids <- clean_id(rownames(res))
-res$gene <- res_ids
-
-eggnog$gene <- clean_id(eggnog$V1)
+rownames(res) <- clean(rownames(res))
+eggnog$gene <- clean(eggnog$V1)
 
 # =========================
-# 4. DEFINE UP / DOWN GENES
+# 4. DIFFERENTIAL GENES
 # =========================
 
-sig <- res[!is.na(res$padj) & res$padj < 0.05, ]
+res <- na.omit(res)
 
-up <- intersect(clean_id(rownames(sig[sig$log2FoldChange > 0, ])), eggnog$gene)
-down <- intersect(clean_id(rownames(sig[sig$log2FoldChange < 0, ])), eggnog$gene)
+up_genes <- rownames(res[res$padj < 0.05 & res$log2FoldChange > 0, ])
+down_genes <- rownames(res[res$padj < 0.05 & res$log2FoldChange < 0, ])
 
-cat("UP genes:", length(up), "\n")
-cat("DOWN genes:", length(down), "\n")
+cat("UP genes:", length(up_genes), "\n")
+cat("DOWN genes:", length(down_genes), "\n")
 
 # =========================
-# 5. =========================
-#    KOG MAPPING
+# 5. PICK GO COLUMN (IMPORTANT FIX)
 # =========================
 
-kog_col <- 7   # eggnog KOG column (adjust if needed)
+go_hits <- sapply(eggnog, function(x) sum(grepl("GO:", x)))
+go_col <- which(go_hits == max(go_hits))
 
-gene2kog <- data.frame(
+cat("GO column:", go_col, "\n")
+
+gene2go <- data.frame(
   gene = eggnog$gene,
-  kog  = eggnog[[kog_col]]
+  go   = eggnog[[go_col]]
 )
 
-gene2kog <- gene2kog[gene2kog$kog != "-" & gene2kog$kog != "" & !is.na(gene2kog$kog), ]
-
-term2gene_kog <- data.frame(
-  term = gene2kog$kog,
-  gene = gene2kog$gene
-)
-
-run_enrich <- function(gene_list, term2gene) {
-  enricher(gene = gene_list, TERM2GENE = term2gene)
-}
-
-ego_kog_up <- run_enrich(up, term2gene_kog)
-ego_kog_down <- run_enrich(down, term2gene_kog)
+gene2go <- gene2go[gene2go$go != "-" & gene2go$go != "" & !is.na(gene2go$go), ]
 
 # =========================
-# 6. SAVE KOG OUTPUT
+# 6. EXPAND GO TERMS (SAFE WAY)
 # =========================
 
-write.csv(as.data.frame(ego_kog_up),
-          file.path(kog_dir, "kog_up.csv"))
+gene2go$go <- as.character(gene2go$go)
 
-write.csv(as.data.frame(ego_kog_down),
-          file.path(kog_dir, "kog_down.csv"))
+split_list <- strsplit(gene2go$go, ",")
 
-# safe plotting
-pdf(file.path(kog_dir, "kog_up_barplot.pdf"))
-if (!is.null(ego_kog_up) && nrow(as.data.frame(ego_kog_up)) > 0) {
-  barplot(ego_kog_up, showCategory = 10)
-}
-dev.off()
-
-pdf(file.path(kog_dir, "kog_down_barplot.pdf"))
-if (!is.null(ego_kog_down) && nrow(as.data.frame(ego_kog_down)) > 0) {
-  barplot(ego_kog_down, showCategory = 10)
-}
-dev.off()
-
-# =========================
-# 7. =========================
-#    GO MAPPING (SAFE PARSE)
-# =========================
-
-go_col <- 10  # from your debug
-
-go_raw <- eggnog[[go_col]]
-
-keep <- go_raw != "-" & !is.na(go_raw)
-
-gene_go <- eggnog$gene[keep]
-go_raw  <- go_raw[keep]
-
-gene_list <- rep(gene_go, lengths(strsplit(go_raw, ",")))
-go_list   <- unlist(strsplit(go_raw, ","))
-
-term2gene_go <- data.frame(
-  term = go_list,
-  gene = gene_list
+term2gene <- data.frame(
+  term = rep(gene2go$go, lengths(split_list)),
+  gene = rep(gene2go$gene, lengths(split_list))
 )
 
 # =========================
-# 8. GO ENRICHMENT
+# 7. REMOVE BAD TERMS
 # =========================
 
-ego_go_up <- run_enrich(up, term2gene_go)
-ego_go_down <- run_enrich(down, term2gene_go)
+term2gene <- term2gene[grepl("GO:", term2gene$term), ]
 
 # =========================
-# 9. SAVE GO OUTPUT
+# 8. QUICK CHECKS
 # =========================
 
-write.csv(as.data.frame(ego_go_up),
-          file.path(go_dir, "go_up.csv"))
+cat("GO terms:", length(unique(term2gene$term)), "\n")
+cat("GO genes:", length(unique(term2gene$gene)), "\n")
 
-write.csv(as.data.frame(ego_go_down),
-          file.path(go_dir, "go_down.csv"))
-
-# safe plots
-pdf(file.path(go_dir, "go_up_barplot.pdf"))
-if (!is.null(ego_go_up) && nrow(as.data.frame(ego_go_up)) > 0) {
-  barplot(ego_go_up, showCategory = 10)
-}
-dev.off()
-
-pdf(file.path(go_dir, "go_down_barplot.pdf"))
-if (!is.null(ego_go_down) && nrow(as.data.frame(ego_go_down)) > 0) {
-  barplot(ego_go_down, showCategory = 10)
-}
-dev.off()
+cat("UP overlap:", length(intersect(up_genes, term2gene$gene)), "\n")
+cat("DOWN overlap:", length(intersect(down_genes, term2gene$gene)), "\n")
 
 # =========================
-# 10. SUMMARY
+# 9. ENRICHMENT
+# =========================
+
+ego_up <- enricher(up_genes, TERM2GENE = term2gene)
+ego_down <- enricher(down_genes, TERM2GENE = term2gene)
+
+kog2gene <- data.frame(
+  term = eggnog$V7,
+  gene = eggnog$gene
+)
+kog2gene <- kog2gene[kog2gene$term != "-" & kog2gene$term != "", ]
+
+ekog_up <- enricher(up_genes, TERM2GENE = kog2gene)
+ekog_down <- enricher(down_genes, TERM2GENE = kog2gene)
+
+# =========================
+# 10. OUTPUT
+# =========================
+
+write.csv(as.data.frame(ego_up), file.path(outdir, "up_go.csv"))
+write.csv(as.data.frame(ego_down), file.path(outdir, "down_go.csv"))
+
+write.csv(as.data.frame(ekog_up), file.path(outdir, "up_kog.csv"))
+write.csv(as.data.frame(ekog_down), file.path(outdir, "down_kog.csv"))
+
+# =========================
+# 11. SANITY SUMMARY
 # =========================
 
 cat("\n===== DONE =====\n")
-cat("UP genes:", length(up), "\n")
-cat("DOWN genes:", length(down), "\n")
-cat("KOG UP terms:", nrow(as.data.frame(ego_kog_up)), "\n")
-cat("GO UP terms:", nrow(as.data.frame(ego_go_up)), "\n")
+cat("UP genes:", length(up_genes), "\n")
+cat("DOWN genes:", length(down_genes), "\n")
+
+cat("GO UP terms:", ifelse(is.null(ego_up), 0, nrow(as.data.frame(ego_up))), "\n")
+cat("GO DOWN terms:", ifelse(is.null(ego_down), 0, nrow(as.data.frame(ego_down))), "\n")
+
+cat("KOG UP terms:", ifelse(is.null(ekog_up), 0, nrow(as.data.frame(ekog_up))), "\n")
+cat("KOG DOWN terms:", ifelse(is.null(ekog_down), 0, nrow(as.data.frame(ekog_down))), "\n")
+
 cat("Results saved in:", outdir, "\n")
