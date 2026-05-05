@@ -61,7 +61,7 @@ gene2go <- data.frame(
 gene2go <- gene2go[gene2go$go != "-" & gene2go$go != "" & !is.na(gene2go$go), ]
 
 # =========================
-# 6. EXPAND GO TERMS (SAFE WAY)
+# 6. EXPAND GO TERMS 
 # =========================
 
 gene2go$go <- as.character(gene2go$go)
@@ -92,6 +92,12 @@ cat("DOWN overlap:", length(intersect(down_genes, term2gene$gene)), "\n")
 # =========================
 # 9. ENRICHMENT
 # =========================
+# FILTER GO TERMS
+term_counts <- table(term2gene$term)
+
+valid_terms <- names(term_counts[term_counts >= 10 & term_counts <= 500])
+
+term2gene <- term2gene[term2gene$term %in% valid_terms, ]
 
 ego_up <- enricher(up_genes, TERM2GENE = term2gene)
 ego_down <- enricher(down_genes, TERM2GENE = term2gene)
