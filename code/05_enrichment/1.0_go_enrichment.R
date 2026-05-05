@@ -2,7 +2,7 @@ library(dplyr)
 library(clusterProfiler)
 
 # =========================
-# 1. PATHS (EDIT HERE ONLY)
+# 1. PATHS 
 # =========================
 
 res_file <- "/home/flst8788/Genome-Analysis-1MB462/analysis/04_rnaseq/deseq2_qc/deseq2_qc_results.csv"
