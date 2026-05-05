@@ -1,26 +1,28 @@
-library(clusterProfiler)
+# =========================
+# 0. LIBRARIES
+# =========================
+
 library(dplyr)
+library(clusterProfiler)
 
 # =========================
-# 1. PATHS
+# 1. LOAD DESEQ2 RESULTS
 # =========================
 
-base_out <- "/home/flst8788/Genome-Analysis-1MB462/analysis/05_enrichment/GO_enrichment"
+res <- read.csv(
+  "/home/flst8788/Genome-Analysis-1MB462/analysis/04_rnaseq/deseq2_qc/deseq2_qc_results.csv",
+  row.names = 1
+)
 
-res_path <- "/home/flst8788/Genome-Analysis-1MB462/analysis/04_rnaseq/deseq2_qc/deseq2_qc_results.csv"
 
-eggnog_path <- "/home/flst8788/Genome-Analysis-1MB462/analysis/03_annotation/eggnog.tsv"
-
-dir.create(base_out, recursive = TRUE, showWarnings = FALSE)
+# clean
+res <- na.omit(res)
 
 # =========================
-# 2. LOAD DESEQ2 RESULTS
+# 2. DEFINE SIGNIFICANT GENES
 # =========================
-
-res <- read.csv(res_path, row.names = 1)
 
 sig <- res[!is.na(res$padj) & res$padj < 0.05, ]
-genes <- rownames(sig)
 
 up_genes <- rownames(sig[sig$log2FoldChange > 0, ])
 down_genes <- rownames(sig[sig$log2FoldChange < 0, ])
@@ -29,65 +31,90 @@ down_genes <- rownames(sig[sig$log2FoldChange < 0, ])
 # 3. LOAD EGGNOG ANNOTATION
 # =========================
 
-eggnog <- read.table(
-  eggnog_path,
-  header = TRUE,
-  sep = "\t",
+eggnog <- read.delim(
+  "/home/flst8788/Genome-Analysis-1MB462/analysis/03_annotation/eggnog_chr3/chr3_eggnog.emapper.annotations",
+  header = FALSE,
+  comment.char = "#",
+  fill = TRUE,
   quote = "",
-  comment.char = ""
+  stringsAsFactors = FALSE
 )
 
-# adjust column names if needed
-eggnog <- eggnog[, c("Gene", "GOs")]
-
-eggnog <- eggnog[eggnog$GOs != "-", ]
-
 # =========================
-# 4. BUILD GENE → GO MAP
+# 4. BUILD GENE → KOG TABLE
 # =========================
 
-gene2go <- data.frame(
-  gene = rep(eggnog$Gene, lengths(strsplit(eggnog$GOs, ","))),
-  go   = unlist(strsplit(eggnog$GOs, ","))
+gene2kog <- data.frame(
+  gene = eggnog$V1,
+  kog  = eggnog$V7
 )
 
-gene2go <- na.omit(gene2go)
+gene2kog <- gene2kog[gene2kog$kog != "-", ]
+
+term2gene <- data.frame(
+  term = gene2kog$kog,
+  gene = gene2kog$gene
+)
 
 # =========================
-# 5. ENRICHMENT
+# 5. ENRICHMENT FUNCTION
 # =========================
 
-ego_all <- enricher(genes, TERM2GENE = gene2go)
-ego_up <- enricher(up_genes, TERM2GENE = gene2go)
-ego_down <- enricher(down_genes, TERM2GENE = gene2go)
+run_enrich <- function(gene_list, term2gene) {
+  enricher(
+    gene = gene_list,
+    TERM2GENE = term2gene
+  )
+}
 
 # =========================
-# 6. SAVE RESULTS
+# 6. RUN ENRICHMENT
 # =========================
 
-write.csv(as.data.frame(ego_all),
-          file.path(base_out, "go_all.csv"))
+ego_up <- enricher(
+  gene = up_genes,
+  TERM2GENE = term2gene
+)
+
+ego_down <- enricher(
+  gene = down_genes,
+  TERM2GENE = term2gene
+)
+
+# =========================
+# 7. OUTPUT DIRECTORY
+# =========================
+
+outdir <- "/home/flst8788/Genome-Analysis-1MB462/analysis/05_enrichment/kog_enrichment"
+dir.create(outdir, showWarnings = FALSE, recursive = TRUE)
+
+# =========================
+# 8. SAVE TABLES
+# =========================
 
 write.csv(as.data.frame(ego_up),
-          file.path(base_out, "go_up.csv"))
+          file = file.path(outdir, "kog_up.csv"))
 
 write.csv(as.data.frame(ego_down),
-          file.path(base_out, "go_down.csv"))
+          file = file.path(outdir, "kog_down.csv"))
 
 # =========================
-# 7. PLOTS
+# 9. PLOTS
 # =========================
 
-pdf(file.path(base_out, "go_all_barplot.pdf"))
-barplot(ego_all, showCategory = 15)
+pdf(file.path(outdir, "kog_up_barplot.pdf"))
+barplot(ego_up, showCategory = 10, title = "Upregulated genes (KOG)")
 dev.off()
 
-pdf(file.path(base_out, "go_up_barplot.pdf"))
-barplot(ego_up, showCategory = 15)
+pdf(file.path(outdir, "kog_down_barplot.pdf"))
+barplot(ego_down, showCategory = 10, title = "Downregulated genes (KOG)")
 dev.off()
 
-pdf(file.path(base_out, "go_down_barplot.pdf"))
-barplot(ego_down, showCategory = 15)
-dev.off()
+# =========================
+# 10. SUMMARY OUTPUT
+# =========================
 
-cat("GO enrichment complete\n")
+cat("\n===== ENRICHMENT DONE =====\n")
+cat("Upregulated genes:", length(up_genes), "\n")
+cat("Downregulated genes:", length(down_genes), "\n")
+cat("Results saved in:", outdir, "\n")
