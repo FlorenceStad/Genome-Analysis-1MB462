@@ -1,7 +1,7 @@
 library(dplyr)
 
-deg <- read.csv("analysis/05_deseq2/deseq2_results.csv")
-anno <- read.delim("analysis/03_annotation/eggnog.tsv")
+deg <- read.csv("/home/flst8788/Genome-Analysis-1MB462/analysis/04_rnaseq/deseq2_qc/deseq2_qc_results.csv")
+anno <- read.delim("/home/flst8788/Genome-Analysis-1MB462/analysis/03_annotation/eggnog_chr3/chr3_eggnog.emapper.annotations")
 
 deg_filt <- subset(deg, padj < 0.05 & abs(log2FoldChange) > 1)
 
@@ -12,7 +12,7 @@ kegg <- merged %>%
   na.omit()
 
 write.table(kegg$KEGG_ko,
-            file="analysis/06_go/kegg_ko_list.txt",
+            file="home/flst8788/Genome-Analysis-1MB462/analysis/05_enrichment/kegg_ko_list.txt",
             quote=FALSE,
             row.names=FALSE,
             col.names=FALSE)
