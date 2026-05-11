@@ -34,8 +34,7 @@ anno <- read.table(
   check.names = FALSE
 )
 
-# clean column names
-colnames(anno) <- trimws(gsub("^#", "", colnames(anno)))
+colnames(anno) <- trimws(colnames(anno))
 
 cat("Annotation rows:", nrow(anno), "\n")
 
