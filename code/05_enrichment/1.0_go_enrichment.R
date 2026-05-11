@@ -10,7 +10,7 @@ deg$gene_id <- rownames(deg)
 
 deg_filt <- deg %>%
   filter(!is.na(padj)) %>%
-  filter(padj < 0.05 & abs(log2FoldChange) > 1)
+  filter(padj < 0.1)
 
 # EGGNOG
 lines <- readLines(eggnog_file)
