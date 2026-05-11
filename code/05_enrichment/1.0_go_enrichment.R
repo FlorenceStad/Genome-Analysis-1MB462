@@ -9,8 +9,7 @@ deg <- read.csv(deg_file, row.names = 1)
 deg$gene_id <- rownames(deg)
 
 deg_filt <- deg %>%
-  filter(!is.na(padj)) %>%
-  filter(padj < 0.1)
+  filter(!is.na(padj))
 
 # EGGNOG
 lines <- readLines(eggnog_file)
