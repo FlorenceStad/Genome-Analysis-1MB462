@@ -8,6 +8,8 @@
 
 module load Bandage
 
+export QT_QPA_PLATFORM=offscreen
+
 # PATHS
 ASSEMBLY_DIR=/home/flst8788/Genome-Analysis-1MB462/analysis/02_assembly/flye_chr3
 OUTDIR=/home/flst8788/Genome-Analysis-1MB462/analysis/02_assembly/flye_visualisation
