@@ -46,7 +46,7 @@ go_data <- merged %>%
 term2gene <- unique(go_data[, c("GOs", "gene_id")])
 
 ego <- clusterProfiler::enricher(
-  gene = unique(go_data$gene_id),
+  gene = (go_data$gene_id),
   TERM2GENE = term2gene
 )
 
