@@ -51,6 +51,9 @@ ego <- clusterProfiler::enricher(
   TERM2GENE = term2gene
 )
 
+cat("GO genes in input:", length(unique(go_data$gene_id)), "\n")
+cat("TERM2GENE rows:", nrow(term2gene), "\n")
+
 write.csv(as.data.frame(ego),
           "/home/flst8788/Genome-Analysis-1MB462/analysis/05_enrichment/go_enrichment_results.csv",
           row.names = FALSE)
