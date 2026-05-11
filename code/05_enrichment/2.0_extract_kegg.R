@@ -35,6 +35,7 @@ anno <- read.table(
 )
 
 colnames(anno) <- trimws(colnames(anno))
+colnames(anno) <- gsub("^#","", colnames(anno))
 
 cat("Annotation rows:", nrow(anno), "\n")
 
