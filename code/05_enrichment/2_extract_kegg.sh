@@ -9,9 +9,9 @@
 module load R/4.3.1
 
 WORKDIR=/home/flst8788/Genome-Analysis-1MB462
-SCRIPT=$WORKDIR/scripts/extract_kegg.R
+SCRIPT=$WORKDIR/code/05_enrichment/extract_kegg.R
 
-mkdir -p $WORKDIR/analysis/06_go
+mkdir -p $WORKDIR/analysis/05_enrichment
 
 Rscript $SCRIPT
 
