@@ -17,7 +17,7 @@ WORKDIR=/home/flst8788/Genome-Analysis-1MB462
 SCRIPT=$WORKDIR/code/05_enrichment/1.0_go_enrichment.R
 
 # CREATE OUTPUT DIR
-mkdir -p $WORKDIR/analysis/06_go
+mkdir -p $WORKDIR/analysis/05_enrichment
 
 # RUN
 Rscript $SCRIPT
