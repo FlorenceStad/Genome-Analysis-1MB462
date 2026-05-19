@@ -1,4 +1,5 @@
 library(DESeq2)
+library(pheatmap)
 
 # =========================
 # 1. LOAD COUNTS
@@ -145,5 +146,33 @@ plot(
 )
 
 dev.off()
+
+# =========================
+# 10. Heatmap
+# =========================
+
+top_var_genes <- head(order(rowVars(assay(vsd)), decreasing = TRUE), 20)
+mat <- assay(vsd)[top_var_genes, ]
+
+mat <- mat - rowMeans(mat)
+
+df <- as.data.frame(colData(dds)[, c("condition")])
+colnames(df) <- "Condition"
+rownames(df) <- colnames(mat)
+
+pdf(file.path(outdir, "heatmap_top20.pdf"), width = 8, height = 10)
+
+pheatmap(mat, 
+         annotation_col = df, 
+         main = "Top 20 Variable Genes",
+         clustering_distance_rows = "euclidean",
+         clustering_distance_cols = "euclidean",
+         color = colorRampPalette(c("blue", "white", "red"))(100),
+         border_color = NA,
+         show_colnames = TRUE)
+
+dev.off()
+
+cat("Heatmap created in output directory\n")
 
 cat("QC complete\n")

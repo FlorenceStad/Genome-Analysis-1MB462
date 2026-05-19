@@ -1,24 +1,21 @@
-library(dplyr)
+library(dplyr) 
 
-# PATHS
+# PATHS 
 deg_file <- "/home/flst8788/Genome-Analysis-1MB462/analysis/04_rnaseq/deseq2_qc/deseq2_qc_results.csv"
 
 anno_file <- "/home/flst8788/Genome-Analysis-1MB462/analysis/03_annotation/eggnog_chr3/chr3_eggnog.emapper.annotations"
 
 out_file <- "/home/flst8788/Genome-Analysis-1MB462/analysis/05_enrichment/kegg_ko_list.txt"
 
-# READ DEG
-deg <- read.csv(deg_file, stringsAsFactors = FALSE)
+# DEG (FIXED)
+deg <- read.csv(deg_file, row.names = 1, stringsAsFactors = FALSE)
 deg$gene_id <- rownames(deg)
 
 deg_filt <- deg %>%
   filter(!is.na(padj)) %>%
   filter(padj < 0.05 & abs(log2FoldChange) > 1)
 
-cat("DEG rows:", nrow(deg), "\n")
-cat("Filtered DEGs:", nrow(deg_filt), "\n")
-
-# READ ANNOTATION (ROBUST)
+# ANNO
 lines <- readLines(anno_file)
 header_idx <- grep("^#query", lines)
 clean_lines <- lines[header_idx:length(lines)]
@@ -34,46 +31,25 @@ anno <- read.table(
   check.names = FALSE
 )
 
-colnames(anno) <- trimws(colnames(anno))
-colnames(anno) <- gsub("^#","", colnames(anno))
+colnames(anno) <- gsub("^#", "", colnames(anno))
 
-cat("Annotation rows:", nrow(anno), "\n")
+# FIX ID
+anno$query_gene <- sub("\\.t[0-9]+$", "", anno$query)
 
-# FIND KEGG COLUMN SAFELY
-kegg_col <- intersect(c("KEGG_ko", "KEGG_KO", "KEGG.ko"), colnames(anno))[1]
-
-if (is.na(kegg_col)) {
-  stop(" No KEGG column found in annotation file")
-}
-
-anno$KEGG_ko <- anno[[kegg_col]]
-
-# DEBUG OVERLAP
-cat("\n===== DEBUG =====\n")
-cat("DEG example:\n")
-print(head(deg_filt$gene_id))
-
-cat("Annotation example:\n")
-print(head(anno$query))
-
-cat("Overlap:\n")
-print(length(intersect(deg_filt$gene_id, anno$query)))
-
-# MERGE
-merged <- merge(deg_filt, anno, by.x = "gene_id", by.y = "query")
+# MERGE (FIXED)
+merged <- merge(deg_filt, anno, by.x = "gene_id", by.y = "query_gene")
 
 cat("Merged rows:", nrow(merged), "\n")
 
-# CLEAN KEGG
-merged <- merged %>%
-  filter(!is.na(KEGG_ko), KEGG_ko != "-")
+# KEGG CLEAN
+library(tidyr)
 
 kegg <- merged %>%
-  select(gene_id, KEGG_ko)
+  select(gene_id, KEGG_ko) %>%
+  filter(!is.na(KEGG_ko), KEGG_ko != "-") %>%
+  separate_rows(KEGG_ko, sep = ",")
 
 # OUTPUT
-dir.create(dirname(out_file), recursive = TRUE, showWarnings = FALSE)
-
 write.table(
   kegg$KEGG_ko,
   file = out_file,
@@ -82,4 +58,4 @@ write.table(
   col.names = FALSE
 )
 
-cat("KEGG DONE ->", out_file, "\n")
+cat("KEGG DONE\n")
